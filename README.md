@@ -49,6 +49,7 @@ https://playground.tensorflow.org/
 
 # Known bugs
 
--- When using Octave, 3D scatter plot background is black by default
-   and must be changed to white manually to see data clearly
+-- When using Octave with GNUPLOT qt, 3D scatter plot background is
+   black by default and must be changed to white manually to see data
+   clearly
 
