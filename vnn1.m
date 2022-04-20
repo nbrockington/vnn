@@ -105,7 +105,7 @@ costFunction = @(p) nnCostFunction( p , ...
                                    nclasses , X , y , lambda );
 
 % Run optimisation with fmincg
-[ nn_params, cost ] = fmincg( costFunction , initial_nn_params , options );
+[ nn_params, cost ] = fmincgwfigs( costFunction , initial_nn_params , options );
 
 % Obtain Theta1 and Theta2 back from nn_params
 Theta1 = reshape( nn_params( 1 : nhiddenunits * ( ndim + 1 ) ) , ...
