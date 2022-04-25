@@ -30,7 +30,7 @@ load( 'vismatrixdata.mat' );
 p = predict( Theta1 , Theta2 , D );
 
 % Create a new figure and hold on; set axes                                             
-figure; hold on;
+% figure; hold on;
 axis( [-10 10 -10 10] );
 
 % For each data class:                                                                  

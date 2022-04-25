@@ -53,9 +53,10 @@ else
   visualisedata( X , y );
 end
 title( "Training Dataset" , "FontSize" , 18 );
+close; % Close figure
 
 fprintf('\nProgram paused. Press enter to set initial random weights.\n');
-pause;
+%pause;
 
 %% INITIALISE NEURAL NETWORK STRUCTURE
 fprintf( '\nInitialising Neural Network Structure ...\n' );
@@ -79,21 +80,22 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 
 % Visualise the neural network output from the initial weights
 if (ndim == 2)
+  figure; hold on;
   D = visualiseNNoutput( initial_Theta1 , initial_Theta2 );
   title( "Neural network output: initial random weights" ,
 	"FontSize" , 18 );
 end
-
+close; % Close figure.
 
 fprintf('\nProgram paused. Press enter to train the neural network.\n');
-pause;
+%pause;
 
 %% --------------------------------------------------------------------
 %% TRAINING THE NEURAL NETWORK %% 
 fprintf('\nTraining Neural Network... \n')
 
 % Setting up options for optimisation
-options = optimset( 'MaxIter', 250 );
+options = optimset( 'MaxIter', 10 );
 
 % Regularisation parameter
 lambda = 0.1;
@@ -105,7 +107,7 @@ costFunction = @(p) nnCostFunction( p , ...
                                    nclasses , X , y , lambda );
 
 % Run optimisation with fmincg
-[ nn_params, cost ] = fmincgwfigs( costFunction , initial_nn_params , options );
+[ nn_params, cost ] = fmincgv( costFunction , initial_nn_params , options );
 
 % Obtain Theta1 and Theta2 back from nn_params
 Theta1 = reshape( nn_params( 1 : nhiddenunits * ( ndim + 1 ) ) , ...
@@ -122,7 +124,7 @@ pause;
 
 % Calculate training dataset error: 
 pred_train = predict(Theta1, Theta2, X);
-fprintf( "\nTraining Set Accuracy: %f\n" , mean(double(pred_train==y)) * 100);
+fprintf( "\n** Training Set Accuracy: %f **\n" , mean(double(pred_train==y)) * 100);
 
 % Visualise training set errors: 
 if (ndim == 2)
@@ -136,7 +138,7 @@ title( "Training Dataset: cross indicates classification error" ,
 
 % Calculate test dataset error (generalisation):
 pred_test = predict(Theta1, Theta2, Xtest);
-fprintf( "\nTest Set Accuracy: %f\n" , mean(double(pred_test==ytest)) * 100);
+fprintf( "\n** Test Set Accuracy: %f **\n" , mean(double(pred_test==ytest)) * 100);
 
 % Visualise test set errors:
 if (ndim == 2 )
@@ -150,6 +152,7 @@ title( "Test Dataset: cross indicates classification error" ,
 
 % Visualise neural network outputs over the input space
 if (ndim == 2)
+  figure; hold on;
   D = visualiseNNoutput( Theta1 , Theta2 );
   title( "Neural network output: final learned weights" ,
 	"FontSize" , 18 );
