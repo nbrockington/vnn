@@ -1,30 +1,32 @@
-function D = visualiseNNoutput( Theta1 , Theta2 )
+function D = visualiseNNoutput( Theta1 , Theta2 , res = 0.2 )
 % VISUALISENNOUTPUT Given the weights of the neural network, plot the
 % predicted labels of data points covering 2D input space.
 %
 % NB. The 2D input space is currently fixed to be -10 to 10, -10 to 10. 
 % 
-% - 
+% - res represents the spacings of dots plotted, 0.2 by default
 % Written by Nela Brockington, 19th April 2022, London, U.K. 
 
+hold on;
+  
 % Create a 'pale' colour table for up to four data classes:
-  colours = { [ 0.3 0.7 0.95 ] ,       % blue-ish
+  colours = { [ 0.3 0.7 0.95 ] , % blue-ish
 	      [ 0.9 0.3 0.5 ] ,  % bordeaux-ish
-	      [ 0.7 0.85 0.3 ] ,  % green-ish
-              [ 1 0.9 0.4 ] }; % orange-ish
+	      [ 0.7 0.85 0.3 ] , % green-ish
+              [ 1 0.9 0.4 ] };   % orange-ish
 
 % Load matrix of data points covering the input space
-load( 'vismatrixdata.mat' );
+% load( 'vismatrixdata.mat' );
   
 % Create a matrix of data points covering the input space
-% D = [];
-% i = 1;
-% for x = -10 : 0.15 : 10
-%   for y = -10 : 0.15 : 10
-%     D( i , : ) = [ x , y ];
-%     i += 1;
-%   end
-% end
+D = [];
+i = 1;
+for x = -10 : res : 10
+  for y = -10 : res : 10
+    D( i , : ) = [ x , y ];
+    i += 1;
+  end
+end
 
 % Calculate the neural network categorisation over the input space
 p = predict( Theta1 , Theta2 , D );
@@ -34,7 +36,7 @@ p = predict( Theta1 , Theta2 , D );
 axis( [-10 10 -10 10] );
 
 % For each data class:                                                                  
-for c = 1:size( unique( p ) , 1 )
+for c = 1:size( Theta2 , 1 )
 
   % Plot the data from that class onto a 2D scatter plot                                
   scatter( D( find( p==c ) , 1 ) , D( find( p==c ) , 2 ) ,

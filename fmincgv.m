@@ -1,5 +1,5 @@
 function [X, fX, i] = fmincgv(f, X, options, P1, P2, P3, P4, P5)
-% Minimize a continuous differentialble multivariate function. Starting point
+% Minimize a continuous differentiable multivariate function. Starting point
 % is given by "X" (D by 1), and the function named in the string "f", must
 % return a function value and a vector of partial derivatives. The Polack-
 % Ribiere flavour of conjugate gradients is used to compute search directions,
@@ -48,9 +48,8 @@ function [X, fX, i] = fmincgv(f, X, options, P1, P2, P3, P4, P5)
 %
 % Changes made by Nela Brockington, April 2022:
 % 1) Name changed from fmincg to fmincgv, where v = "visual"
-% 2) Created figure with two subplots showing neural network output and
-% cost value (training error) at each iteration. 
-%
+% 2) Created figure with to show cost value (training error) at each iteration. 
+%  
 %
 %
 
@@ -92,30 +91,17 @@ z1 = red/(1-d1);                                  % initial step is red/(|s|+1)
 
 
 
-% [NB] Create figure:
+% [NB] Create figure to show cost over iteration:
 myfig = figure();
-% Visualise a default plot on subplot 1
-subplot( 2, 1, 1 );
 hold on;
-% plot( [1:10] , [1:10] );
-Theta1 = reshape( X( 1 : 25 * ( 2 + 1 ) ) , ...
-                 25 , ( 2 + 1 ) );
-
-Theta2 = reshape( X( ( 1 + ( 25 * ( 2+ 1 ) ) ) : end ) , ...
-                 4 , ( 25 + 1 ) );
-
-D = visualiseNNoutput( Theta1 , Theta2 );
-
-% Set up subplot 2 and plot initial cost against iteration = 0
-subplot( 2 , 1, 2 );
-hold on;
-xlabel( "Interation" , "FontSize", 12 );
-ylabel( "Cost" , "FontSize" , 12 );
-title( "Training Error" , "FontSize" , 14 );
-costs = [ f1 ]; % Create new array to hold all cost values for plotting.
+xlabel( "Interation Number" , "FontSize", 15 );
+ylabel( "Cost J(theta)" , "FontSize" , 14 );
+title( "Cost function during training" , "FontSize" , 14 );
+costs = [ f1 ] % Create new array to accumulate cost values for plotting.
 axis( [-0.5 2 0 costs(1)+0.5] );
 plot( 0 , costs(1) , "-k");
-drawnow(); % Force plot to update
+drawnow(); % Plot update
+% Manual intervention needed as bug prevents setting background colour:
 fprintf( "Paused.\nManually set figure background colour to white.\nThen press enter to continue." );
 pause;
 
@@ -188,11 +174,8 @@ while i < abs(length)                                      % while not finished
 
   if success                                         % if line search succeeded
     f1 = f2; fX = [fX' f1]';
-    fprintf("%s %4i | Cost: %4.6e\r", S, i, f1);
 
     % [NB] Update plot with the cost value at this iteration
-    subplot( 2 , 1 , 2 );
-    hold on;
     axis([ -0.5 i+1 0 costs(1)+0.5 ] );
     costs( end + 1 ) = f1;
     plot( [ 0:i ] , costs , "-ok", "markerfacecolor" , "k" ,
@@ -200,23 +183,7 @@ while i < abs(length)                                      % while not finished
     drawnow();
 
 
-    % [NB] Update plot with output of weights at this iteration
-    subplot( 2, 1, 1 );
-    hold on;
-    % plot( [1:10] , [1:10] );
-    Theta1 = reshape( X( 1 : 25 * ( 2 + 1 ) ) , ...
-                 25 , ( 2 + 1 ) );
-
-    Theta2 = reshape( X( ( 1 + ( 25 * ( 2+ 1 ) ) ) : end ) , ...
-                 4 , ( 25 + 1 ) );
-
-    D = visualiseNNoutput( Theta1 , Theta2 );
-    drawnow();
-    fprintf( "Press enter to continue: " );
-    pause();
-
-
-    
+    fprintf("%s %4i | Cost: %4.6e\r", S, i, f1);    
     s = (df2'*df2-df1'*df2)/(df1'*df1)*s - df2;      % Polack-Ribiere direction
     tmp = df1; df1 = df2; df2 = tmp;                         % swap derivatives
     d2 = df1'*s;

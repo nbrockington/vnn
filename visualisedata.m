@@ -1,6 +1,7 @@
 function visualisedata( X , y )
 % VISUALISEDATA Plot dataset on a 3D scatter plot 
-%
+% NB. The calling subroutine is expected to set up the figure.
+%  
 % - scatter points are coloured according to their class label 
 % - matrix X contains the data, vector y contains the labels
 % - currently up to maximum 4 data labels
@@ -18,7 +19,7 @@ function visualisedata( X , y )
 
   
   % Create a new figure and hold on; control background colour:
-  figure; hold on;
+  % figure; hold on;
 
   % For each data class: 
   for c = 1:size( unique( y ) , 1 )

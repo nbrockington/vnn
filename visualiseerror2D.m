@@ -4,6 +4,8 @@ function visualiseerror2D( X , y , pred)
 % that plot the predicted labels from the trained neural network, to
 % visualise the accuracy of the categorisaton.
 % 
+% NB. The calling subroutine is expected to set up the figure.
+%  
 % - matrix X contains the data, vector y contains the labels
 % - vector pred contains the predictions of the neural network
 %  
@@ -16,9 +18,10 @@ function visualiseerror2D( X , y , pred)
 	     [ 0.4660 0.6740 0.1880 ] ,   % green-ish	     
 	     [ 0.9290 0.6940 0.1250 ] };  % orange-ish
 
-  
-  % Create a new figure and hold on:
-  figure; hold on;
+  % Set axes
+  hold on;
+  axis( [-10 10 -10 10] );  
+
 
   % For each data class: 
   for c = 1:size( unique( y ) , 1 )
@@ -29,7 +32,7 @@ function visualiseerror2D( X , y , pred)
     
     % Plot the data from that class onto a 2D scatter plot: 
     scatter( X( find( y==c ) , 1 ) , X( find( y==c ) , 2 ) ,
-	    [] , colours{c} , '.' );
+	    1 , colours{c} , '.' );
 
     % In lieu of legend(?!!), add text to indicate class label colour
     text( 7 , 10-2*c , strcat( "class:" , num2str( c ) ) , "color" ,

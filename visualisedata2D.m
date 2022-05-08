@@ -1,6 +1,6 @@
 function visualisedata2D( X , y )
 % VISUALISEDATA2D Plot the special case of 2D data onto a 2D scatter
-% plot. 
+% plot. NB. The calling subroutine is explected to set up the figure.
 %
 % - scatter points are coloured according to their class label 
 % - matrix X contains the data, vector y contains the labels
@@ -16,8 +16,8 @@ function visualisedata2D( X , y )
 	     [ 0.9290 0.6940 0.1250 ] };  % orange-ish
 
   
-  % Create a new figure and hold on; set axes
-  figure; hold on;
+  % Set axes
+  hold on;
   axis( [-10 10 -10 10] );
 
   % For each data class: 
@@ -29,7 +29,7 @@ function visualisedata2D( X , y )
     
     % Plot the data from that class onto a 2D scatter plot
     scatter( X( find( y==c ) , 1 ) , X( find( y==c ) , 2 ) ,
-	     [] , colours{c} , 'filled' );
+	     1 , colours{c} , 'filled' );
 
     % In lieu of legend(?!!), add text to indicate class label colour
     text( 7 , 10-2*c , strcat( "class:" , num2str( c ) ) , "color" ,
