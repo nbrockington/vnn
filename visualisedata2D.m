@@ -15,6 +15,12 @@ function visualisedata2D( X , y )
 	     [ 0.4660 0.6740 0.1880 ] ,   % green-ish	     
 	     [ 0.9290 0.6940 0.1250 ] };  % orange-ish
 
+  % Create a 'dark' colour table for up to four data classes:
+  darker = { [ 0.2 0.25 0.65 ] , % blue-ish
+	    [ 0.6 0.2 0.35 ] ,  % bordeaux-ish
+	    [ 0.25 0.6 0.2 ] , % green-ish
+	    [ 0.65 0.6 0.35 ] };   % orange-ish
+
   
   % Set axes
   hold on;
@@ -33,7 +39,7 @@ function visualisedata2D( X , y )
 
     % In lieu of legend(?!!), add text to indicate class label colour
     text( 7 , 10-2*c , strcat( "class:" , num2str( c ) ) , "color" ,
-	 colours{c} , "FontSize" , 16 );
+	 darker{c} , "FontSize" , 16 );
 
   end
 

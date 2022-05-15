@@ -25,28 +25,28 @@
 %  this code to handle variable data and parameter dimensions, and added
 %  visualisations.**
 %  
-%  Edited by Nela Brockington, 18th April 2022, London, U.K.
-
+%  Edited by Nela Brockington, April-May 2022, London, U.K.
+%  These edits indicated by (NB) comments.
 
 
 %% --------Initialization----------------------------------------
 clc;
                     
 
-% Identify Training Data
+% (NB) Identify Training Data
 fprintf('Loading and Visualizing Data ...\n')
 
-load( '2Dclusterdata1.mat' );
+%load( '2Dclusterdata1.mat' );
 % load('clusterdata1.mat');
 
-% load( '2Dspheredata1.mat' ); 
+load( '2Dspheredata1.mat' ); 
 % load('spheredata1.mat');
 % load('spheredata2.mat');
 % load('spheredata3.mat');
 m = size( X , 1 );
 
 
-% Create Figure 1 to visualise: 
+% (NB) Create Figure 1 to visualise: 
 % - Training Data (subplot 1/4)
 % - Initial random weights (subplot 2/4)
 % - Performance on Training Data after training (subplot 3/4)
@@ -55,14 +55,15 @@ figure( 1 );
 subplot( 2 , 2 , 1 );
 hold on;
 
-% Display training data visually
+% (NB) Display training data visually
 ndim = size( X , 2 );
 if (ndim == 2)
   visualisedata2D( X , y );
 else
   visualisedata( X , y );
 end
-title( "Training Dataset" , "FontSize" , 14 );
+title( "Training Set" , "FontSize" , 14 );
+%close;
 
 
 fprintf('\nProgram paused. Press enter to set initial random weights.\n');
@@ -88,15 +89,15 @@ initial_Theta2 = randInitializeWeights( nhiddenunits , nclasses );
 initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 
 
-% Visualise the neural network output from the initial weights
+% (NB) Visualise the neural network output from the initial weights
 if (ndim == 2)
   figure( 1 );
   subplot( 2 , 2 , 2 ); hold on;
   D = visualiseNNoutput( initial_Theta1 , initial_Theta2 );
-  title( "Neural network output: initial random weights" ,
+  title( "Neural network: initial random weights" ,
 	"FontSize" , 14 );
 end
-
+%close;
 
 fprintf('\nProgram paused. Press enter to train the neural network.\n');
 %pause;
@@ -105,8 +106,9 @@ fprintf('\nProgram paused. Press enter to train the neural network.\n');
 %% TRAINING THE NEURAL NETWORK %% 
 fprintf('\nTraining Neural Network... \n')
 
-% Setting up options for optimisation
-options = optimset( 'MaxIter', 10 );
+% Setting up options for optimisation: number of iterations
+NumIter = 20;
+options = optimset( 'MaxIter', NumIter );
 
 % Regularisation parameter
 lambda = 0.1;
@@ -117,8 +119,9 @@ costFunction = @(p) nnCostFunction( p , ...
                                    nhiddenunits , ...
                                    nclasses , X , y , lambda );
 
-% Run optimisation with fmincg
-[ nn_params, cost ] = fmincgv( costFunction , initial_nn_params , options );
+% (NB) Run optimisation with fmincg, collect returned weights at quartiles
+[ nn_params, cost, it, qweights] = fmincgv( costFunction , ...
+				   initial_nn_params , options );
 
 % Obtain Theta1 and Theta2 back from nn_params
 Theta1 = reshape( nn_params( 1 : nhiddenunits * ( ndim + 1 ) ) , ...
@@ -127,17 +130,18 @@ Theta1 = reshape( nn_params( 1 : nhiddenunits * ( ndim + 1 ) ) , ...
 Theta2 = reshape( nn_params( ( 1 + ( nhiddenunits * ( ndim + 1 ) ) ) : end ) , ...
                  nclasses , ( nhiddenunits + 1 ) );
 
-fprintf('\nProgram paused. Press enter to run the neural network on the test dataset.\n');
-pause;
+%fprintf('\nProgram paused. Press enter to run the neural network on the test data.\n');
+%pause;
 
 %% ---------------------------------------------------------------------------
 %% TESTING THE NEURAL NETWORK %%
 
 % Calculate training dataset error: 
 pred_train = predict(Theta1, Theta2, X);
-fprintf( "\n** Training Set Accuracy: %f **\n" , mean(double(pred_train==y)) * 100);
+fprintf( "\n** Training Set Accuracy: %.1f%% **\n" , ...
+	mean(double(pred_train==y)) * 100 );
 
-% Visualise training set errors:
+% (NB) Visualise training set errors onto Figure 1 subplot:
 figure( 1 );
 subplot( 2 , 2 , 3 ); hold on;
 if (ndim == 2)
@@ -145,15 +149,15 @@ if (ndim == 2)
 else  
   visualiseerror( X , y , pred_train );
 end
-title( "Training Data (crosses=errors)" , "FontSize" , 14 );
-
+title( "Training Set (crosses=errors)" , "FontSize" , 14 );
 
 
 % Calculate test dataset error (generalisation):
 pred_test = predict(Theta1, Theta2, Xtest);
-fprintf( "\n** Test Set Accuracy: %f **\n" , mean(double(pred_test==ytest)) * 100);
+fprintf( "\n** Test Set Accuracy: %.1f%% **\n" , ...
+	mean(double(pred_test==ytest)) * 100 );
 
-% Visualise test set errors:
+% (NB) Visualise test set errors onto Figure 1 subplot:
 figure( 1 );
 subplot( 2 , 2 , 4 ); hold on;
 if (ndim == 2 )
@@ -161,16 +165,29 @@ if (ndim == 2 )
 else
   visualiseerror( Xtest , ytest , pred_test ); 
 end
-title( "Test Data (crosses=errors)" ,
+title( "Test Set (crosses=errors)" ,
       "FontSize" , 14 );
 
 
-% Visualise neural network outputs over the input space
+% (NB) Visualise snapshots of neural network learned weights:
 if (ndim == 2)
-  figure; hold on;
-  D = visualiseNNoutput( Theta1 , Theta2 );
-  title( "Neural network output: final learned weights" ,
-	"FontSize" , 18 );
+  figure( 3 );
+  for i = 1:3
+    q_params = qweights{ 1 , i };
+    QTheta1 = reshape( q_params( 1 : nhiddenunits * ( ndim + 1 ) ) , ...
+                 nhiddenunits , ( ndim + 1 ) );
+
+    QTheta2 = reshape( q_params( ( 1 + ( nhiddenunits * ( ndim + 1 ) ) ) : end ) , ...
+                 nclasses , ( nhiddenunits + 1 ) );
+    subplot( 2 , 2 , i ); hold on;
+    D = visualiseNNoutput( QTheta1 , QTheta2 );
+    title( ["Weights at quartile ", num2str( i ) ] ,
+	  "FontSize" , 14 );
+  end
+  subplot( 2 , 2 , 4 ); hold on;
+    D = visualiseNNoutput( Theta1 , Theta2 );
+    title( "Final learned weights" ,
+	  "FontSize" , 14 );
 end
 
 

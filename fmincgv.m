@@ -1,4 +1,4 @@
-function [X, fX, i] = fmincgv(f, X, options, P1, P2, P3, P4, P5)
+function [ X, fX, i, C ] = fmincgv(f, X, options, P1, P2, P3, P4, P5)
 % Minimize a continuous differentiable multivariate function. Starting point
 % is given by "X" (D by 1), and the function named in the string "f", must
 % return a function value and a vector of partial derivatives. The Polack-
@@ -46,12 +46,13 @@ function [X, fX, i] = fmincgv(f, X, options, P1, P2, P3, P4, P5)
 % 1) Function name and argument specifications
 % 2) Output display
 %
-% Changes made by Nela Brockington, April 2022:
+% Changes made by Nela Brockington, April-May 2022:
 % 1) Name changed from fmincg to fmincgv, where v = "visual"
-% 2) Created figure with to show cost value (training error) at each iteration. 
-%  
+% 2) Created figure to show cost value (training error) at each iteration. 
+% 3) Returning snapshot of weights at first, second and third quartiles
+% of the learning process.
 %
-%
+
 
   
 
@@ -91,7 +92,7 @@ z1 = red/(1-d1);                                  % initial step is red/(|s|+1)
 
 
 
-% [NB] Create figure to show cost over iteration:
+% (NB) Initialise figure to show cost by iteration:
 myfig = figure();
 hold on;
 xlabel( "Interation Number" , "FontSize", 15 );
@@ -104,6 +105,18 @@ drawnow(); % Plot update
 % Manual intervention needed as bug prevents setting background colour:
 fprintf( "Paused.\nManually set figure background colour to white.\nThen press enter to continue." );
 pause;
+
+
+% (NB) Identify first, second and third quartiles of the iteration process:
+quartiles = zeros( 1 , 3 );
+for qtl = 1:3
+  quartiles( qtl ) = round( length * ( qtl / 4 ));
+end
+
+
+% (NB) Create empty cell array C to hold snapshot weights at quartiles:
+C = {};
+% end (NB) edits
 
 
 
@@ -174,16 +187,32 @@ while i < abs(length)                                      % while not finished
 
   if success                                         % if line search succeeded
     f1 = f2; fX = [fX' f1]';
+    fprintf("%s %4i | Cost: %4.6e\r", S, i, f1);
 
-    % [NB] Update plot with the cost value at this iteration
+  
+    % (NB) Update plot with the cost value at this iteration:
     axis([ -0.5 i+1 0 costs(1)+0.5 ] );
     costs( end + 1 ) = f1;
     plot( [ 0:i ] , costs , "-ok", "markerfacecolor" , "k" ,
 	 "MarkerSize" , 3 , "LineWidth", 2 );    
     drawnow();
 
+    % (NB) At each quartile of the iteration process, save current weights:
+    if ismember( i , quartiles )
+      qtl = size( C )( 2 ) + 1;
+      fprintf("\nSaving snapshot of weights at quartile %1i.\n", qtl );
+      C{ 1 , qtl } = X;
+      % ...and quartile on cost function plot: 
+      plot( [ i, i ] , [ 0, costs(1)+0.5 ] , 'm--' );
+      text( i , costs(1)+0.3 , strcat( "quartile:" , num2str( qtl ) ) ,
+	   "color" , 'm' , "FontSize" , 14 );
+      drawnow();
+    end
 
-    fprintf("%s %4i | Cost: %4.6e\r", S, i, f1);    
+
+    %end (NB) edits
+
+
     s = (df2'*df2-df1'*df2)/(df1'*df1)*s - df2;      % Polack-Ribiere direction
     tmp = df1; df1 = df2; df2 = tmp;                         % swap derivatives
     d2 = df1'*s;

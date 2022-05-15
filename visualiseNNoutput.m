@@ -15,6 +15,15 @@ hold on;
 	      [ 0.7 0.85 0.3 ] , % green-ish
               [ 1 0.9 0.4 ] };   % orange-ish
 
+
+% Create a 'dark' colour table for up to four data classes:
+  darker = { [ 0.2 0.25 0.65 ] , % blue-ish
+	      [ 0.6 0.2 0.35 ] ,  % bordeaux-ish
+	      [ 0.25 0.6 0.2 ] , % green-ish
+              [ 0.65 0.6 0.35 ] };   % orange-ish
+
+
+  
 % Load matrix of data points covering the input space
 % load( 'vismatrixdata.mat' );
   
@@ -44,7 +53,7 @@ for c = 1:size( Theta2 , 1 )
 
   % In lieu of legend(?!!), add text to indicate class label colour                     
   text( 7 , 10-2*c , strcat( "class:" , num2str( c ) ) , "color" ,
-         colours{c} , "FontSize" , 16 );
+         darker{c} , "FontSize" , 16 );
 
 end
 
