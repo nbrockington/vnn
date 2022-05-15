@@ -1,6 +1,6 @@
 # VNN (Octave/MATLAB)
 
-![Neural Network Visualisations](220515_vnn1_visualisations.png)
+![Neural Network Visualisations](220515_vnn1_visuals.png)
 
 Run with command >>vnn1 on MATLAB/Octave command prompt.
 
