@@ -2,7 +2,7 @@
 
 ![Neural Network Visualisations](220515_vnn1_visuals.png)
 
-Run with command `>>vnn1` on MATLAB/Octave command prompt.
+Run with command `>> vnn1` on MATLAB/Octave command prompt.
 
 Visualise the learning of a toy neural neural network on
 multidimensional data.
