@@ -31,18 +31,26 @@
 clc;
                     
 
-% (NB) Identify Training Data
+% (NB) Identify Training Data; get user choice of data shape:
+fprintf( 'MENU: Select data shape:\n' );
+fprintf( 'Press 1 to load spherical data.\n' );
+fprintf( 'Press 2 to load cluster data.\n' );
+data_choice = input( 'Enter choice here: ' , 's' );
+
 fprintf('Loading and Visualizing Data ...\n')
 
-load( '2Dclusterdata1.mat' );
+if (data_choice == '1')
+  load( '2Dspheredata1.mat' ); 
+else
+  load( '2Dclusterdata1.mat' );
+end
 % load('clusterdata1.mat');
-
-% load( '2Dspheredata1.mat' ); 
 % load('spheredata1.mat');
 % load('spheredata2.mat');
 % load('spheredata3.mat');
-m = size( X , 1 );
 
+% Assign number of training examples to variable m:
+m = size( X , 1 );
 
 % (NB) Create Figure 1 to visualise: 
 % - Training Data (subplot 1/4)
