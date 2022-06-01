@@ -36,10 +36,10 @@ clc;
 % (NB) Identify Training Data
 fprintf('Loading and Visualizing Data ...\n')
 
-%load( '2Dclusterdata1.mat' );
+load( '2Dclusterdata1.mat' );
 % load('clusterdata1.mat');
 
-load( '2Dspheredata1.mat' ); 
+% load( '2Dspheredata1.mat' ); 
 % load('spheredata1.mat');
 % load('spheredata2.mat');
 % load('spheredata3.mat');

@@ -33,15 +33,19 @@ https://playground.tensorflow.org/
 
 # Functionality to add
 
+-- Visualise final neural network structure and weights for 2D data
+   training.
+
+-- Implement flexible user choice of number of units in the hidden
+   layer, with immediate visualistion of randomly initialised weights.
+
 -- Add visualisation of cost function on Test Set data during training
    (to fmincgv.m)
 
 -- Add neural network % performance to subplot titles for final
    Training Set and Test Set visualisations (to vnn1.m)
 
--- Visualise hidden units for 2D data
-
--- Implement user choice about uploading saved dataset or generating new
+-- Implement user choice for uploading saved dataset or generating new
    dataset (via menu interface)
 
 -- Visualisation of neural network learning and hidden units fo n-D
@@ -59,8 +63,10 @@ https://playground.tensorflow.org/
 # Known bugs
 -- Has only been tested on OS X (MacBook Pro)
 
--- On some OX S systems,when using Octave with GNUPLOT qt, 3D scatter
-   plot background is black by default and must be changed to white
-   manually by user to improve visualisation
+-- On older OX S systems, such as Mojave 10.14.6 and earlier, when
+   using Octave with GNUPLOT qt, 3D scatter plot background is black
+   by default and must be changed to white manually by user at the
+   start of the backpropagation learning process to improve
+   visualisation.
 
 
