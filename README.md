@@ -37,6 +37,7 @@ https://playground.tensorflow.org/
 
 
 # Functionality to add
+-- Visualise low-res filters of units in neural network structure
 
 -- Change training snapshots to occur at early points in training,
    instead of quartiles.
