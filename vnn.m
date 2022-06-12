@@ -28,7 +28,7 @@
 
 
 %% --------Initialization----------------------------------------
-clc;
+clear all; close all; clc;
                     
 
 % (NB) Identify Training Data; get user choice of data shape:
@@ -80,7 +80,7 @@ fprintf( '\nInitialising Neural Network Structure ...\n' );
 
 %% Number of units in each of the  layers of the neural network
 % NB. Number of units in first layer is number of dimensions of data, ndim.
-nhiddenunits = 25; 
+nhiddenunits = 6; 
 nclasses = size( unique( y ) , 1 ); % Set to the number of labels
 
 
@@ -95,15 +95,21 @@ initial_Theta2 = randInitializeWeights( nhiddenunits , nclasses );
 initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 
 
-% (NB) Visualise the neural network output from the initial weights
+% (NB) Visualise the neural network output from the initial weights:
 if (ndim == 2)
-  figure( 1 );
+  figure( 1 , 'Position' , [ 5 , 450 , 560 , 394 ]);
   subplot( 2 , 2 , 2 ); hold on;
   D = visualiseNNoutput( initial_Theta1 , initial_Theta2 );
   title( "Neural network: initial random weights" ,
 	"FontSize" , 14 );
 end
 %close;
+
+% (NB) Show structure of the neural network from initial weights:
+figref1 = showNetwork( initial_Theta1 , initial_Theta2 );
+title( "Neural network structure: initial random weights" , "FontSize" ,
+      14 );
+
 
 fprintf('\nProgram paused. Press enter to train the neural network.\n');
 %pause;
@@ -113,7 +119,7 @@ fprintf('\nProgram paused. Press enter to train the neural network.\n');
 fprintf('\nTraining Neural Network... \n')
 
 % Setting up options for optimisation: number of iterations
-NumIter = 20;
+NumIter = 100;
 options = optimset( 'MaxIter', NumIter );
 
 % Regularisation parameter
@@ -177,7 +183,7 @@ title( "Test Set (crosses=errors)" ,
 
 % (NB) Visualise snapshots of neural network learned weights:
 if (ndim == 2)
-  figure( 3 );
+  figure( 4 );
   for i = 1:3
     q_params = qweights{ 1 , i };
     QTheta1 = reshape( q_params( 1 : nhiddenunits * ( ndim + 1 ) ) , ...
@@ -196,5 +202,9 @@ if (ndim == 2)
 	  "FontSize" , 14 );
 end
 
+% (NB) Show structure of the neural network with final learned weights:
+figref2 = showNetwork( Theta1 , Theta2 );
+title( "Neural network structure: final learned weights" , "FontSize" ,
+      14 );
 
 

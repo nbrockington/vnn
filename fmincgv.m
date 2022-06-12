@@ -93,7 +93,7 @@ z1 = red/(1-d1);                                  % initial step is red/(|s|+1)
 
 
 % (NB) Initialise figure to show cost by iteration:
-myfig = figure();
+myfig = figure( 'Position' , [5 , 5 , 600 , 300 ] );
 hold on;
 xlabel( "Interation Number" , "FontSize", 15 );
 ylabel( "Cost J(theta)" , "FontSize" , 14 );
