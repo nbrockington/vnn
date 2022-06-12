@@ -79,8 +79,9 @@ fprintf('\nProgram paused. Press enter to set initial random weights.\n');
 fprintf( '\nInitialising Neural Network Structure ...\n' );
 
 %% Number of units in each of the  layers of the neural network
+nhiddenunits = input( "Enter number of units in the hidden layer: " );
+
 % NB. Number of units in first layer is number of dimensions of data, ndim.
-nhiddenunits = 6; 
 nclasses = size( unique( y ) , 1 ); % Set to the number of labels
 
 
@@ -119,7 +120,8 @@ fprintf('\nProgram paused. Press enter to train the neural network.\n');
 fprintf('\nTraining Neural Network... \n')
 
 % Setting up options for optimisation: number of iterations
-NumIter = 100;
+% NumIter = 100;
+NumIter = input( "Enter number of iterations for training: " );
 options = optimset( 'MaxIter', NumIter );
 
 % Regularisation parameter
@@ -148,10 +150,11 @@ Theta2 = reshape( nn_params( ( 1 + ( nhiddenunits * ( ndim + 1 ) ) ) : end ) , .
 %% ---------------------------------------------------------------------------
 %% TESTING THE NEURAL NETWORK %%
 
-% Calculate training dataset error: 
+% Calculate training dataset accuracy:
 pred_train = predict(Theta1, Theta2, X);
-fprintf( "\n** Training Set Accuracy: %.1f%% **\n" , ...
-	mean(double(pred_train==y)) * 100 );
+train_acc = mean(double(pred_train==y)) * 100 ;
+fprintf( "\n** Training Set Accuracy: %.1f%% **\n" , train_acc );
+	
 
 % (NB) Visualise training set errors onto Figure 1 subplot:
 figure( 1 );
@@ -161,13 +164,15 @@ if (ndim == 2)
 else  
   visualiseerror( X , y , pred_train );
 end
-title( "Training Set (crosses=errors)" , "FontSize" , 14 );
+title( [ "Training Set ", num2str( round( train_acc*10 )/10 ) , ...
+	"% (crosses=errors)" ], "FontSize" , 14 );
 
 
-% Calculate test dataset error (generalisation):
+% Calculate test dataset accuracy (generalisation):
 pred_test = predict(Theta1, Theta2, Xtest);
-fprintf( "\n** Test Set Accuracy: %.1f%% **\n" , ...
-	mean(double(pred_test==ytest)) * 100 );
+test_acc = mean(double(pred_test==ytest)) * 100 ;
+fprintf( "\n** Test Set Accuracy: %.1f%% **\n" , test_acc );
+	
 
 % (NB) Visualise test set errors onto Figure 1 subplot:
 figure( 1 );
@@ -177,8 +182,8 @@ if (ndim == 2 )
 else
   visualiseerror( Xtest , ytest , pred_test ); 
 end
-title( "Test Set (crosses=errors)" ,
-      "FontSize" , 14 );
+title( [ "Test Set ", num2str( round( test_acc*10 )/10 ) , ...
+      "% (crosses=errors)" ] , "FontSize" , 14 );
 
 
 % (NB) Visualise snapshots of neural network learned weights:
