@@ -29,11 +29,11 @@ https://playground.tensorflow.org/
    network performance on training and test datasets and visualise
    final categorisation of dataset space.
 
--- Currently, visualising neural network data is only supported for 2D
-   data; however, n-D data can be learned.
+-- Currently, only 2D data can be visualised (although nD data can be
+   learned for any n>1).
 
--- Currently, visualising neural network structure is only supported
-   for a 3-layer network.
+-- Currently, only a neural network with 3 layers can be specified and
+   visualised.
 
 
 # Functionality to add
