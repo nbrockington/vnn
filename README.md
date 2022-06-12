@@ -2,7 +2,9 @@
 
 ![Neural Network Visualisations](220515_vnn1_visuals.png)
 
-Run with command `>> vnn1` on MATLAB/Octave command prompt.
+![Show Structure](220612_showNetworkfig.png)
+
+Run with command `>> vnn` on MATLAB/Octave command prompt.
 
 Visualise the learning of a toy neural neural network on
 multidimensional data.
@@ -21,28 +23,34 @@ https://playground.tensorflow.org/
 
 # Current functionality
 
--- vnn1: Script to upload a cluster or spherical dataset and view it;
+-- vnn: Script to upload a cluster or spherical dataset and view it;
    set random weights to the neural network and visualise the intial
    network state; train the neural network on the data; view neural
    network performance on training and test datasets and visualise
    final categorisation of dataset space.
 
--- Currently, visualising neural network learning is only supported
-   for 2D data; however, n-D data can be learned.  
+-- Currently, only 2D data can be visualised (although nD data can be
+   learned for any n>1).
+
+-- Currently, only a neural network with 3 layers can be specified and
+   visualised.
 
 
 # Functionality to add
 
--- Visualise final neural network structure and weights for 2D data
-   training.
+-- Change training snapshots to occur at early points in training,
+   instead of quartiles.
 
--- Implement flexible user choice of number of units in the hidden
-   layer, with immediate visualistion of randomly initialised weights.
+DONE-- Visualise final neural network structure and weights for 2D
+   data training.
+
+DONE-- Implement user choice of number of units in the hidden layer, with
+   immediate visualistion of randomly initialised weights.
 
 -- Add visualisation of cost function on Test Set data during training
    (to fmincgv.m)
 
--- Add neural network % performance to subplot titles for final
+DONE-- Add neural network % performance to subplot titles for final
    Training Set and Test Set visualisations (to vnn1.m)
 
 -- Implement user choice for uploading saved dataset or generating new
