@@ -75,7 +75,7 @@ DONE-- Add neural network % performance to subplot titles for final
 # Known bugs
 -- Has only been tested on OS X (MacBook Pro)
 
--- On older OX S systems, such as Mojave 10.14.6 and earlier, when
+-- On older OS X systems, such as Mojave 10.14.6 and earlier, when
    using Octave with GNUPLOT qt, 3D scatter plot background is black
    by default and must be changed to white manually by user at the
    start of the backpropagation learning process to improve
