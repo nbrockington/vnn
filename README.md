@@ -4,10 +4,13 @@
 
 ![Show Structure](220612_showNetworkfig.png)
 
-Run with command `>> vnn` on MATLAB/Octave command prompt.
-
 Visualise the learning of a toy neural neural network on
 multidimensional data.
+
+Run with command `>> vnn` on MATLAB/Octave command prompt.
+
+Run with command `>> debug_showNetwork` to play around with just
+setting up a neural network with random weights.
 
 Neural network/backpropagation/optimisation code comes from Andrew
 Ng's Coursera ML course
