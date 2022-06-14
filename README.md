@@ -40,10 +40,16 @@ https://playground.tensorflow.org/
 
 
 # Functionality to add
--- Visualise low-res filters of units in neural network structure
-
 -- Change training snapshots to occur at early points in training,
    instead of quartiles.
+
+-- Implement user choice for uploading saved dataset or generating new
+   dataset (via menu interface)
+
+-- Make neural network structure (no. of hidden layers, number of
+   units in each layer) flexible and selected by user
+
+-- Visualise low-res filters of units in neural network structure
 
 DONE-- Visualise final neural network structure and weights for 2D
    data training.
@@ -57,14 +63,8 @@ DONE-- Implement user choice of number of units in the hidden layer, with
 DONE-- Add neural network % performance to subplot titles for final
    Training Set and Test Set visualisations (to vnn1.m)
 
--- Implement user choice for uploading saved dataset or generating new
-   dataset (via menu interface)
-
--- Visualisation of neural network learning and hidden units fo n-D
-   data, n >= 3, on 2D and 3D scatter plots.
-
--- Make neural network structure (no. of hidden layers, number of
-   units in each layer) flexible and selected by user
+-- Visualisation of neural network filters and structure for nD data,
+   n >= 3. Possible 3D scatter plots?
 
 -- More dataset distribution shapes, including "ribbons"
 
@@ -73,12 +73,12 @@ DONE-- Add neural network % performance to subplot titles for final
 
 
 # Known bugs
--- Has only been tested on OS X (MacBook Pro) and Windows 10 (Surface Pro)
+-- Tested only on OS X (MacBook Pro) and Windows 10 (Surface Pro)
 
 -- On older OS X systems, such as Mojave 10.14.6 and earlier, when
    using Octave with GNUPLOT qt, 3D scatter plot background is black
    by default and must be changed to white manually by user at the
    start of the backpropagation learning process to improve
-   visualisation.
+   visualisation. Edges of neural networks also render as too thick.
 
 
