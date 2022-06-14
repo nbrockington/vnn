@@ -38,8 +38,8 @@ function figref = showNetwork( Th1 , Th2 )
   x3 = ones( n3 , 1 ) * 3 ;
 
   % Add x-coordinate offset to bias units (except output layer):
-  x1( 1 ) += 0.15;
-  x2( 1 ) += 0.15;
+  x1( 1 ) += 0.01;
+  x2( 1 ) += 0.01;
   
   % Calculating y-coordinates of each unit in each layer:  
   y1 = [ max_n : -spaces1 : start1 ]' ;

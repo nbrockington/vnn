@@ -103,7 +103,7 @@ axis( [-0.5 2 0 costs(1)+0.5] );
 plot( 0 , costs(1) , "-k");
 drawnow(); % Plot update
 % Manual intervention needed as bug prevents setting background colour:
-fprintf( "Paused.\nManually set figure background colour to white.\nThen press enter to continue." );
+fprintf( "Paused (set figure background to white if needed).\nPress enter to begin training." );
 pause;
 
 
