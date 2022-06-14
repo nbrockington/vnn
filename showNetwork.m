@@ -42,9 +42,9 @@ function figref = showNetwork( Th1 , Th2 )
   x2( 1 ) += 0.15;
   
   % Calculating y-coordinates of each unit in each layer:  
-  y1 = [ max_n : -spaces1 : start1 ]'
-  y2 = [ max_n : -spaces2 : start2 ]'
-  y3 = [ max_n : -spaces3 : start3 ]'
+  y1 = [ max_n : -spaces1 : start1 ]' ;
+  y2 = [ max_n : -spaces2 : start2 ]' ;
+  y3 = [ max_n : -spaces3 : start3 ]' ;
   
   %% SHOW NETWORK
   % Create figure to show neural network, and get its handle: 
