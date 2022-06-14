@@ -73,7 +73,7 @@ DONE-- Add neural network % performance to subplot titles for final
 
 
 # Known bugs
--- Has only been tested on OS X (MacBook Pro)
+-- Has only been tested on OS X (MacBook Pro) and Windows 10 (Surface Pro)
 
 -- On older OS X systems, such as Mojave 10.14.6 and earlier, when
    using Octave with GNUPLOT qt, 3D scatter plot background is black
