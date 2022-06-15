@@ -60,6 +60,9 @@ function figref = showNetwork( Th1 , Th2 )
   % plotted as solid black lines; negative weights are plotted as dashed
   % mid-grey lines. 
 
+  % Setting the width constant to control thickness range: 
+  widthconstant = 2;
+  
   % Plotting input layer to hidden layer: 
   for j = 1:n1 % input layer
 
@@ -70,11 +73,11 @@ function figref = showNetwork( Th1 , Th2 )
 	plot( [ x1( j ) , x2( i+1 ) ] , [ y1( j ) , y2( i+1 ) ] , ...
 	   '-' , ...
 	   'Color' , grey , ...
-	   'LineWidth' , abs( Th1( i , j ) * 4 ) ) ;
+	   'LineWidth' , abs( Th1( i , j ) * widthconstant ) ) ;
       else
 	plot( [ x1( j ) , x2( i+1 ) ] , [ y1( j ) , y2( i+1 ) ] , ...
 	   'k-' , ...
-	   'LineWidth' , abs( Th1( i , j ) * 4 ) ) ;
+	   'LineWidth' , abs( Th1( i , j ) * widthconstant ) ) ;
       end
     end 
   end
@@ -90,11 +93,11 @@ function figref = showNetwork( Th1 , Th2 )
 	plot( [ x2( j ) , x3( i ) ] , [ y2( j ) , y3( i ) ] , ...
 	   '-' , ...
 	   'Color' , grey , ...
-	   'LineWidth' , abs( Th2( i , j ) * 4 ) );
+	   'LineWidth' , abs( Th2( i , j ) * widthconstant ) );
       else
 	plot( [ x2( j ) , x3( i ) ] , [ y2( j ) , y3( i ) ] , ...
 	   'k-' , ...
-	   'LineWidth' , abs( Th2( i , j ) * 4 ) );
+	   'LineWidth' , abs( Th2( i , j ) * widthconstant ) );
       end
     end 
   end
