@@ -40,6 +40,10 @@ https://playground.tensorflow.org/
 
 
 # Functionality to add
+
+-- Implement user input validation to ensure suitable parameters are
+   used for training. 
+
 -- Change training snapshots to occur at early points in training,
    instead of quartiles.
 
@@ -59,6 +63,8 @@ DONE-- Implement user choice of number of units in the hidden layer, with
 
 -- Add visualisation of cost function on Test Set data during training
    (to fmincgv.m)
+
+-- Make figure sizes relative to user screen size rather than fixed.
 
 DONE-- Add neural network % performance to subplot titles for final
    Training Set and Test Set visualisations (to vnn1.m)
