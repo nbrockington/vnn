@@ -42,7 +42,7 @@ https://playground.tensorflow.org/
 # Functionality to add
 
 -- Implement user input validation to ensure suitable parameters are
-   used for training. 
+   used for network structure and training. 
 
 -- Change training snapshots to occur at early points in training,
    instead of quartiles.
@@ -55,19 +55,19 @@ https://playground.tensorflow.org/
 
 -- Visualise low-res filters of units in neural network structure
 
-DONE-- Visualise final neural network structure and weights for 2D
-   data training.
+DONE(220612)-- Visualise final neural network structure and weights
+   for 2D data training.
 
-DONE-- Implement user choice of number of units in the hidden layer, with
-   immediate visualistion of randomly initialised weights.
+DONE(220612)-- Implement user choice of number of units in the hidden
+   layer, with immediate visualistion of randomly initialised weights.
 
 -- Add visualisation of cost function on Test Set data during training
    (to fmincgv.m)
 
 -- Make figure sizes relative to user screen size rather than fixed.
 
-DONE-- Add neural network % performance to subplot titles for final
-   Training Set and Test Set visualisations (to vnn1.m)
+DONE(220612)-- Add neural network % performance to subplot titles for
+   final Training Set and Test Set visualisations (to vnn1.m)
 
 -- Visualisation of neural network filters and structure for nD data,
    n >= 3. Possible 3D scatter plots?
