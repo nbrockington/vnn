@@ -60,24 +60,26 @@ function figref = showNetwork( Th1 , Th2 )
   % plotted as solid black lines; negative weights are plotted as dashed
   % mid-grey lines. 
 
-  % Setting the width constant to control thickness range: 
-  widthconstant = 2;
+  % Setting width constant to control thickness range of weights: 
+  k = 1 ;
+  widthconstant1 = k / max( max( Th1 ) );
+  widthconstant2 = k / max( max( Th2 ) );
   
   % Plotting input layer to hidden layer: 
   for j = 1:n1 % input layer
 
     for i = 1:(n2-1) % output layer, excluding bias unit
 
-      if Th1( i , j ) < 0
+      if Th1( i , j ) < 0 % negative weights in grey
 
 	plot( [ x1( j ) , x2( i+1 ) ] , [ y1( j ) , y2( i+1 ) ] , ...
 	   '-' , ...
 	   'Color' , grey , ...
-	   'LineWidth' , abs( Th1( i , j ) * widthconstant ) ) ;
-      else
+	   'LineWidth' , abs( Th1( i , j ) * widthconstant1 ) ) ;
+      else % positive weights in magenta
 	plot( [ x1( j ) , x2( i+1 ) ] , [ y1( j ) , y2( i+1 ) ] , ...
-	   'k-' , ...
-	   'LineWidth' , abs( Th1( i , j ) * widthconstant ) ) ;
+	   'm-' , ...
+	   'LineWidth' , abs( Th1( i , j ) * widthconstant1 ) ) ;
       end
     end 
   end
@@ -88,16 +90,16 @@ function figref = showNetwork( Th1 , Th2 )
 
     for i = 1:n3 % output layer
 
-      if Th2( i , j ) < 0
+      if Th2( i , j ) < 0 % negative weights in grey
 
 	plot( [ x2( j ) , x3( i ) ] , [ y2( j ) , y3( i ) ] , ...
 	   '-' , ...
 	   'Color' , grey , ...
-	   'LineWidth' , abs( Th2( i , j ) * widthconstant ) );
-      else
+	   'LineWidth' , abs( Th2( i , j ) * widthconstant2 ) );
+      else % positive weights in magenta
 	plot( [ x2( j ) , x3( i ) ] , [ y2( j ) , y3( i ) ] , ...
-	   'k-' , ...
-	   'LineWidth' , abs( Th2( i , j ) * widthconstant ) );
+	   'm-' , ...
+	   'LineWidth' , abs( Th2( i , j ) * widthconstant2 ) );
       end
     end 
   end
@@ -107,10 +109,10 @@ function figref = showNetwork( Th1 , Th2 )
 
 
   
-  % Plot the bias units in red: 
-  plot( x1( 1 ) , y1( 1 ) , 'rs' , 'MarkerFaceColor' , 'r' , ...
+  % Plot the bias units in black: 
+  plot( x1( 1 ) , y1( 1 ) , 'ks' , 'MarkerFaceColor' , 'k' , ...
        'MarkerSize' , 12 );
-  plot( x2( 1 ) , y2( 1 ) , 'rs' , 'MarkerFaceColor' , 'r' , ...
+  plot( x2( 1 ) , y2( 1 ) , 'ks' , 'MarkerFaceColor' , 'k' , ...
        'MarkerSize' , 12 );
        
   % Plot the rest of the units in blue:
