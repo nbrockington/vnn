@@ -78,7 +78,7 @@ DONE(220612)-- Add neural network % performance to subplot titles for
 
 
 
-# Known bugs
+# Known issues
 
 -- Tested only on OS X (MacBook Pro) and Windows 10 (Surface
    Pro). Lines are too thick when rendered on some systems.
