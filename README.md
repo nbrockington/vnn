@@ -41,6 +41,14 @@ https://playground.tensorflow.org/
 
 # Functionality to add
 
+-- Make neural network structure (no. of hidden layers, number of
+   units in each layer) flexible and selectable by user
+
+-- Generalise backpropagation algorithm to work for neural networks
+   with any number of layers
+
+-- Visualise feature filters of units in neural network structure
+
 -- Implement user input validation to ensure suitable parameters are
    used for network structure and training. 
 
@@ -49,11 +57,6 @@ https://playground.tensorflow.org/
 
 -- Implement user choice for uploading saved dataset or generating new
    dataset (via menu interface)
-
--- Make neural network structure (no. of hidden layers, number of
-   units in each layer) flexible and selected by user
-
--- Visualise low-res filters of units in neural network structure
 
 DONE(220612)-- Visualise final neural network structure and weights
    for 2D data training.
@@ -64,7 +67,7 @@ DONE(220612)-- Implement user choice of number of units in the hidden
 -- Add visualisation of cost function on Test Set data during training
    (to fmincgv.m)
 
--- Make figure sizes relative to user screen size rather than fixed.
+-- Make figure sizes relative to screen size rather than fixed.
 
 DONE(220612)-- Add neural network % performance to subplot titles for
    final Training Set and Test Set visualisations (to vnn1.m)
