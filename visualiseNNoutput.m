@@ -27,15 +27,8 @@ hold on;
 % Load matrix of data points covering the input space
 % load( 'vismatrixdata.mat' );
   
-% Create a matrix of data points covering the input space
-D = [];
-i = 1;
-for x = -10 : res : 10
-  for y = -10 : res : 10
-    D( i , : ) = [ x , y ];
-    i += 1;
-  end
-end
+% Create a list of coordinates sampling the input space
+D = createInputSpaceSampling( res );
 
 % Calculate the neural network categorisation over the input space
 p = predict( Theta1 , Theta2 , D );

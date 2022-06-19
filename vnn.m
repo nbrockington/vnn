@@ -208,7 +208,7 @@ if (ndim == 2)
 end
 
 % (NB) Show structure of the neural network with final learned weights:
-figref2 = showNetwork( Theta1 , Theta2 );
+figref2 = showNetwork( Theta1 , Theta2 , 3 );
 title( "Neural network structure: final learned weights" , "FontSize" ,
       14 );
 
