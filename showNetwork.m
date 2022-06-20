@@ -83,7 +83,7 @@ function figref = showNetwork( Th1 , Th2 , k = 1 )
 	   'LineWidth' , abs( Th1( i , j ) * widthconstant1 ) ) ;
       else % positive weights in magenta
 	plot( [ x1( j ) , x2( i+1 ) ] , [ y1( j ) , y2( i+1 ) ] , ...
-	   'm-' , ...
+	   'r-' , ...
 	   'LineWidth' , abs( Th1( i , j ) * widthconstant1 ) ) ;
       end
     end 
@@ -103,7 +103,7 @@ function figref = showNetwork( Th1 , Th2 , k = 1 )
 	   'LineWidth' , abs( Th2( i , j ) * widthconstant2 ) );
       else % positive weights in magenta
 	plot( [ x2( j ) , x3( i ) ] , [ y2( j ) , y3( i ) ] , ...
-	   'm-' , ...
+	   'r-' , ...
 	   'LineWidth' , abs( Th2( i , j ) * widthconstant2 ) );
       end
     end 
@@ -133,12 +133,23 @@ function figref = showNetwork( Th1 , Th2 , k = 1 )
   % layer:
   Dtemp(:,1) = D(:,1) .* 0.025 .* ( 2.5 / (max_n + 2 ) );
   Dtemp(:,2) = D(:,2) .* 0.025 ;
+
   Dtemp(:,1) += x1( 2 );
   Dtemp(:,2) += y1( 2 );
 
-  scatter( Dtemp(:,1) , Dtemp(:,2) , [3.0] , D(:,1) , "filled" );
+  scatter( Dtemp(:,1) , Dtemp(:,2) , [4.0] , D(:,1) , "filled" );
   colormap( hot );
 
+  minx = min( Dtemp(:,1) );
+  maxx = max( Dtemp(:,1) );
+  miny = min( Dtemp(:,2) );
+  maxy = max( Dtemp(:,2) );
+
+  plot( [ minx , minx ] , [ miny , maxy ] , 'k-' );
+  plot( [ minx , maxx ] , [ miny , miny ] , 'k-' );
+  plot( [ minx , maxx ] , [ maxy , maxy ] , 'k-' );
+  plot( [ maxx , maxx ] , [ miny , maxy ] , 'k-' );
+  
   
   % Plot the bias units in black: 
 %  plot( x1( 1 ) , y1( 1 ) , 'ks' , 'MarkerFaceColor' , 'k' , ...
