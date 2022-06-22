@@ -1,14 +1,12 @@
-function figref = showNetwork( Th1 , Th2 , k = 1 )
+function figref = showNetwork( Thetas , k = 1 )
 %% SHOWNETWORK Given the weights of a neural network, create a
 %% figure showing the structure of the neural network. 
 %%
 %% FIGREF = SHOWNETWORK( Th1 , Th2 ) creats a figures showing the
 %% structure of the neural network, given weight matrices Th1 and Th2.
 %% 
-%% - Th1 is the matrix holding the weights between input layer and
-%% hidden layer (including bias unit in input layer)
-%% - Th2 is the matrix holding the weights between the hidden layer and
-%% the output layer (including bias unit in hidden layer)
+%% - Thetas is a cell array holding the Theta matrices describing the
+%% edge weights between units of each layer of the network
 %% - k is a constant that controls thickness range of the plotted edges,
 %% based on weights
 %%
@@ -17,40 +15,54 @@ function figref = showNetwork( Th1 , Th2 , k = 1 )
 %%  
 %% Written by Nela Brockington, June 2022, London, U.K.
 
+  % Work out key variables from Thetas cell array structure:
+  n_layers = size(Thetas, 2) + 1;
+  Th1 = Thetas{ 1 };
+  Th2 = Thetas{ 2 };
 
-  close all;
-  
   % Number of units in each layer, including bias unit if present:
-  n1 = size( Th1 , 2 );
-  n2 = size( Th2 , 2 );
-  n3 = size( Th2 , 1 ) ;
+  n_units = zeros( 1 , n_layers );
+  
+  for l = 1:n_layers - 1 
+    n_units( l ) = size( Thetas{ l } , 2 );
+  end
 
+  n_units( end ) = size( Thetas{ n_layers-1 } , 1 );
+  
   % Maximum number of units in any layer:
-  max_n = max( [n1 , n2 , n3 ] );
+  max_n = max( n_units );
 
   % Spacings between units in each layer:
-  spaces1 = floor( max_n / n1 );
-  spaces2 = floor( max_n / n2 );
-  spaces3 = floor( max_n / n3 );
+  spaces = floor( max_n ./ n_units );
 
   % Lowest unit y-coordinate in each layer: 
-  start1 = max_n - spaces1 * ( n1 - 1 );
-  start2 = max_n - spaces2 * ( n2 - 1 );
-  start3 = max_n - spaces3 * ( n3 - 1 );
+  starts = max_n - spaces .* ( n_units-1 );
 
-  % Calculating x-coordinates of each unit in each layer:
-  x1 = ones( n1 , 1 ) * 1 ;
-  x2 = ones( n2 , 1 ) * 2 ;
-  x3 = ones( n3 , 1 ) * 3 ;
+  % Create a cell array called "xy" in which each cell is a matrix
+  % holding the x and y coordinates of each unit in the figure:
+  xy{ 1 , n_layers } = [];
 
-  % Add x-coordinate offset to bias units (except output layer):
-  x1( 1 ) += 0.01;
-  x2( 1 ) += 0.01;
+  for l = 1:n_layers
+    xy{ l } = ones( n_units( l ) , 1 ) * l ;
+
+    if l < n_layers
+      xy{ l } += 0.01; % Add x-coordinate offset to bias units
+    end
+
+  end
   
+  x1 = xy{ 1 };% ones( n1 , 1 ) * 1 ;
+  x2 = xy{ 2 };% ones( n2 , 1 ) * 2 ;
+  x3 = xy{ 3 };% ones( n3 , 1 ) * 3 ;
+
   % Calculating y-coordinates of each unit in each layer:  
-  y1 = [ max_n : -spaces1 : start1 ]' ;
-  y2 = [ max_n : -spaces2 : start2 ]' ;
-  y3 = [ max_n : -spaces3 : start3 ]' ;
+  for l = 1:n_layers
+    xy{ l }( : , 2 ) = [ max_n : -spaces( l ) : starts( l ) ]' ;
+  end
+
+  y1 = xy{ 1 }( : , 2 );% [ max_n : -spaces1 : start1 ]' ;
+  y2 = xy{ 2 }( : , 2 );% [ max_n : -spaces2 : start2 ]' ;
+  y3 = xy{ 3 }( : , 2 );% [ max_n : -spaces3 : start3 ]' ;
   
   %% SHOW NETWORK
   % Create figure to show neural network, and get its handle: 
@@ -67,52 +79,58 @@ function figref = showNetwork( Th1 , Th2 , k = 1 )
   % mid-grey lines. 
 
   % Setting width constant to control thickness range of weights: 
-  widthconstant1 = k / max( max( Th1 ) );
-  widthconstant2 = k / max( max( Th2 ) );
-  
-  % Plotting input layer to hidden layer: 
-  for j = 1:n1 % input layer
+  widthconst = zeros( 1 , n_layers-1 );
 
-    for i = 1:(n2-1) % output layer, excluding bias unit
-
-      if Th1( i , j ) < 0 % negative weights in grey
-
-	plot( [ x1( j ) , x2( i+1 ) ] , [ y1( j ) , y2( i+1 ) ] , ...
-	   '-' , ...
-	   'Color' , grey , ...
-	   'LineWidth' , abs( Th1( i , j ) * widthconstant1 ) ) ;
-      else % positive weights in magenta
-	plot( [ x1( j ) , x2( i+1 ) ] , [ y1( j ) , y2( i+1 ) ] , ...
-	   'r-' , ...
-	   'LineWidth' , abs( Th1( i , j ) * widthconstant1 ) ) ;
-      end
-    end 
+  for l = 1:n_layers-1
+    widthconst( l ) = k / max( max( Thetas{ l } ) );
   end
 
 
-    % Plotting hidden layer to output layer: 
-  for j = 1:n2 % hidden layer
+  %% VISUALISING STRENGTH OF NETWORK CONNECTIONS
+  % Plotting network edges onto the figure:
+  for l = 1:n_layers-1 % for each weight matrix
 
-    for i = 1:n3 % output layer
+    % Number of units in the source layer
+    n_source = n_units( l );
 
-      if Th2( i , j ) < 0 % negative weights in grey
+    % Number of units in destination layer, excluding bias unit
+    n_dest = n_units( l+1 );
 
-	plot( [ x2( j ) , x3( i ) ] , [ y2( j ) , y3( i ) ] , ...
-	   '-' , ...
-	   'Color' , grey , ...
-	   'LineWidth' , abs( Th2( i , j ) * widthconstant2 ) );
-      else % positive weights in magenta
-	plot( [ x2( j ) , x3( i ) ] , [ y2( j ) , y3( i ) ] , ...
-	   'r-' , ...
-	   'LineWidth' , abs( Th2( i , j ) * widthconstant2 ) );
-      end
-    end 
+    % If destination layer *is* the output layer, then there is no bias
+    % unit so project weights to all units; correct for shift in Theta
+    % matrix indexing due to bias unit:
+    first_idx = 2;
+    toggle = -1;
+    if l == n_layers-1 
+      first_idx = 1;
+      toggle = 0;
+    end
+    
+    for j = 1:n_source % source layer
+
+      for i = first_idx:n_dest % destination layer
+
+	if Thetas{ l }( i+toggle , j ) < 0 % negative weights in grey
+
+	  plot( [ xy{ l }( j , 1 ) , xy{ l+1 }( i , 1 ) ] , ...
+                [ xy{ l }( j , 2 ) , xy{ l+1 }( i , 2 ) ] , ...
+	       '-' , ...
+	       'Color' , grey , ...
+	       'LineWidth' , ...
+	       abs( Thetas{ l }( i+toggle , j ) * widthconst( l ) ) ) ;
+	else % positive weights in colour
+	  plot( [ xy{ l }( j , 1 ) , xy{ l+1 }( i , 1 ) ] , ...
+                [ xy{ l }( j , 2 ) , xy{ l+1 }( i , 2 ) ] , ...
+	       'r-' , ...
+	       'LineWidth' , ...
+	       abs( Thetas{ l }( i+toggle , j ) * widthconst( l ) ) ) ;
+	end
+      end 
+    end
   end
-
 
 
 %% VISUALISING UNIT FEATURE FILTERS
-
   % Create a list of coordinates that sample the input space:
   D = createInputSpaceSampling( 2 , -9 , 9 );   
   m = size( D )( 1 );
@@ -122,9 +140,9 @@ function figref = showNetwork( Th1 , Th2 , k = 1 )
   % the data space and j is the number of units in the layer. The matrix
   % holds the activation level of the unit for that data sample.
 
-  features( 1 , : ) = { ones( m , n1 ) };
-  features( 2 , : ) = { ones( m , n2 ) };
-  features( 3 , : ) = { ones( m , n3 ) };
+  features( 1 , : ) = { ones( m , n_units( 1 ) ) };
+  features( 2 , : ) = { ones( m , n_units( 2 ) ) };
+  features( 3 , : ) = { ones( m , n_units( 3 ) ) };
 
   % Calculate feature filters for units in input layer: 
   features{ 1 , 1 }( : , 2 : 3 ) = D;

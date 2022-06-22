@@ -12,9 +12,12 @@ nclasses = input( 'Enter number of units in output layer: ' );
 Th1 = randInitializeWeights( ndim , nhiddenunits );
 Th2 = randInitializeWeights( nhiddenunits , nclasses );
 
+Thetas{ 1 } = Th1;
+Thetas{ 2 } = Th2;
+
 % Running showNetwork.m script: 
 
-figref = showNetwork( Th1 , Th2 );
+figref = showNetwork( Thetas );
 
 
 

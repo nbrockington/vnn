@@ -91,6 +91,8 @@ fprintf('\nInitializing Neural Network Parameters ...\n')
 initial_Theta1 = randInitializeWeights( ndim , nhiddenunits );
 initial_Theta2 = randInitializeWeights( nhiddenunits , nclasses );
 
+Thetas{ 1 } = initial_Theta1;
+Thetas{ 2 } = initial_Theta2;
 
 % Unroll parameters                                                                      
 initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
@@ -107,7 +109,7 @@ end
 %close;
 
 % (NB) Show structure of the neural network from initial weights:
-figref1 = showNetwork( initial_Theta1 , initial_Theta2 );
+figref1 = showNetwork( Thetas );
 title( "Neural network structure: initial random weights" , "FontSize" ,
       14 );
 
@@ -208,7 +210,9 @@ if (ndim == 2)
 end
 
 % (NB) Show structure of the neural network with final learned weights:
-figref2 = showNetwork( Theta1 , Theta2 , 3 );
+Thetas{ 1 } = Theta1;
+Thetas{ 2 } = Theta2;
+figref2 = showNetwork( Thetas , 2.5 );
 title( "Neural network structure: final learned weights" , "FontSize" ,
       14 );
 
