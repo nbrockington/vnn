@@ -31,19 +31,72 @@
 clear all; close all; clc;
                     
 
-% (NB) Identify Training Data; get user choice of data shape:
-fprintf( 'MENU: Select data shape:\n' );
-fprintf( 'Press 1 to load spherical data.\n' );
-fprintf( 'Press 2 to load cluster data.\n' );
-data_choice = input( 'Enter choice here: ' , 's' );
+% (NB) User menu: Select training data:
+fprintf( "***\nWelcome to VNN - visualising a neural network.\n\n" );
+fprintf( "Stage 1: Loading and Visualizing Data ...\n\n" );
+fprintf( "MENU: Upload dataset or generate new dataset?\n" );
+fprintf( "Press 1 to UPLOAD a dataset.\n" );
+fprintf( "Press 2 to GENERATE a new dataset.\n" );
+upload_choice = input( "Enter choice here: " , "s" );
+  
+if ( upload_choice == "1" )
+  fprintf( "\nMENU: Select data shape to upload:\n" );
+  fprintf( "Press 1 to load SPHERICAL data.\n" );
+  fprintf( "Press 2 to load CLUSTER data.\n" );
+  data_choice = input( "Enter choice here: " , "s" );
 
-fprintf('Loading and Visualizing Data ...\n')
+  if ( data_choice == "1" )
+    load( '2Dspheredata1.mat' ); 
+  else
+    load( '2Dclusterdata1.mat' );
+  end
 
-if (data_choice == '1')
-  load( '2Dspheredata1.mat' ); 
 else
-  load( '2Dclusterdata1.mat' );
+  while true
+    clc;
+    fprintf( "\nMENU: Select data shape to generate:\n" );
+    fprintf( "Press 1 to generate SPHERICAL data.\n" );
+    fprintf( "Press 2 to generate CLUSTER data.\n" );
+    shape_choice = input( "Enter choice here: " , "s" );
+
+    fprintf( "\nMENU: Select number of LABELS in dataset:\n" );
+    fprintf( "Number of labels must be between 2 and 4, inclusive.\n" );
+    nclasses = input( "Enter choice here: " );
+    while nclasses < 2 || nclasses > 4
+      fprintf( "Number of labels must be between 2 and 4, inclusive.\n" );      
+      nclasses = input( "Enter choice here: " );
+    end
+      
+    fprintf( "\nMENU: Select number of DATA POINTS per label:\n" );
+    fprintf( "Suggested value 500.\n" );
+    nexamples = input( "Enter choice here: " );
+    while nexamples < 100 || nexamples > 800
+      fprintf( "Enter a value between 100 and 800.\n" );
+      nexamples = input( "Enter choice here: " );
+    end
+  
+    if ( shape_choice == "1" )
+      [X , y, Xcv , ycv , Xtest , ytest] = ...
+	  gen3datasets( @gensphere , 2 , nexamples , nclasses );
+    else
+      [X , y, Xcv , ycv , Xtest , ytest] = ...
+	  gen3datasets( @gencluster , 2 , nexamples , nclasses );
+
+    end
+
+    visualisedata2D( X , y , 4 );
+    title( "Visualisation of generated training data" , "FontSize" , 14 ); 
+
+    fprintf( "Press 1 to CONTINUE with this dataset.\n" );
+    fprintf( "Press 2 to generate a NEW dataset.\n" );
+    keep = input( "Enter choice here: " , "s" );
+    close all;
+    if ( keep == "1" )
+      break;
+    end
+  end
 end
+
 % load('clusterdata1.mat');
 % load('spheredata1.mat');
 % load('spheredata2.mat');
@@ -80,8 +133,12 @@ fprintf( '\nInitialising Neural Network Structure ...\n' );
 
 %% Number of units in each of the  layers of the neural network
 nhiddenunits = input( "Enter number of units in the hidden layer: " );
-
-% NB. Number of units in first layer is number of dimensions of data, ndim.
+while nhiddenunits < 1 || nhiddenunits > 20
+  fprintf( "Number of units must be between 1 and 20 inclusive.\n" );
+  nhiddenunits = input( "Enter number of units in the hidden layer: " );  
+end
+  
+% NB. Number of units in first layer is always dimensionality of data (ndim).
 nclasses = size( unique( y ) , 1 ); % Set to the number of labels
 
 
@@ -136,7 +193,7 @@ costFunction = @(p) nnCostFunction( p , ...
                                    nclasses , X , y , lambda );
 
 % (NB) Run optimisation with fmincg, collect returned weights at quartiles
-[ nn_params, cost, it, qweights] = fmincgv( costFunction , ...
+[ nn_params, cost, it, qweights ] = fmincgv( costFunction , ...
 				   initial_nn_params , options );
 
 % Obtain Theta1 and Theta2 back from nn_params
@@ -200,7 +257,7 @@ if (ndim == 2)
                  nclasses , ( nhiddenunits + 1 ) );
     subplot( 2 , 2 , i ); hold on;
     D = visualiseNNoutput( QTheta1 , QTheta2 );
-    title( ["Weights at quartile ", num2str( i ) ] ,
+    title( ["Weights at snapshot ", num2str( i ) ] ,
 	  "FontSize" , 14 );
   end
   subplot( 2 , 2 , 4 ); hold on;

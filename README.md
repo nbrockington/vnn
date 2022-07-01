@@ -42,21 +42,22 @@ https://playground.tensorflow.org/
 # Functionality to add
 
 -- Make neural network structure (no. of hidden layers, number of
-   units in each layer) flexible and selectable by user
+   units in each inner layer) flexible and selectable by user
 
 -- Generalise backpropagation algorithm to work for neural networks
    with any number of layers
 
--- Visualise feature filters of units in neural network structure
+-- Visualise feature filters of individual units in neural network
+   structure 
 
--- Implement user input validation to ensure suitable parameters are
-   used for network structure and training. 
+DONE(220701)-- Implement user input validation to ensure suitable
+   parameters are used for network and training properties
 
--- Change training snapshots to occur at early points in training,
-   instead of quartiles.
+DONE(220701)-- Change training snapshots to occur at earlier points in
+   training, instead of quartiles.
 
--- Implement user choice for uploading saved dataset or generating new
-   dataset (via menu interface)
+DONE(220701)-- Implement user choice for uploading a saved dataset or
+   generating new dataset (via menu interface)
 
 DONE(220612)-- Visualise final neural network structure and weights
    for 2D data training.

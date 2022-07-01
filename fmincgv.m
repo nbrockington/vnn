@@ -46,11 +46,11 @@ function [ X, fX, i, C ] = fmincgv(f, X, options, P1, P2, P3, P4, P5)
 % 1) Function name and argument specifications
 % 2) Output display
 %
-% Changes made by Nela Brockington, April-May 2022:
+% Changes made by Nela Brockington, April-July 2022:
 % 1) Name changed from fmincg to fmincgv, where v = "visual"
 % 2) Created figure to show cost value (training error) at each iteration. 
-% 3) Returning snapshot of weights at first, second and third quartiles
-% of the learning process.
+% 3) Returning snapshot of weights at three time points in the learning
+% process. 
 %
 
 
@@ -103,18 +103,19 @@ axis( [-0.5 2 0 costs(1)+0.5] );
 plot( 0 , costs(1) , "-k");
 drawnow(); % Plot update
 % Manual intervention needed as bug prevents setting background colour:
-fprintf( "Paused (set figure background to white if needed).\nPress enter to begin training." );
+fprintf( "Paused (set figure background to white if needed).\n" );
+fprintf( "PRESS ENTER TO BEGIN TRAINING.\n" );
 pause;
 
 
-% (NB) Identify first, second and third quartiles of the iteration process:
-quartiles = zeros( 1 , 3 );
-for qtl = 1:3
-  quartiles( qtl ) = round( length * ( qtl / 4 ));
-end
+% (NB) Identify first, second and third snapshot timepoints of the
+% iteration process:
+timesnaps = zeros( 1 , 3 );
+timesnaps( 1 ) = round( length * ( 1 / 12 ));
+timesnaps( 2 ) = round( length * ( 1 / 5 ));
+timesnaps( 4 ) = round( length * ( 1 / 2 ));
 
-
-% (NB) Create empty cell array C to hold snapshot weights at quartiles:
+% (NB) Create empty cell array C to hold the snapshot weights
 C = {};
 % end (NB) edits
 
@@ -197,14 +198,15 @@ while i < abs(length)                                      % while not finished
 	 "MarkerSize" , 3 , "LineWidth", 2 );    
     drawnow();
 
-    % (NB) At each quartile of the iteration process, save current weights:
-    if ismember( i , quartiles )
-      qtl = size( C )( 2 ) + 1;
-      fprintf("\nSaving snapshot of weights at quartile %1i.\n", qtl );
-      C{ 1 , qtl } = X;
+    % (NB) At time snapshot of the iteration process, save current weights:
+    if ismember( i , timesnaps )
+      tm = size( C )( 2 ) + 1;
+      fprintf("\nSaving weights at snapshot %1i.\n", tm );
+      C{ 1 , tm } = X;
       % ...and quartile on cost function plot: 
       plot( [ i, i ] , [ 0, costs(1)+0.5 ] , 'm--' );
-      text( i , costs(1)+0.3 , strcat( "quartile:" , num2str( qtl ) ) ,
+      text( i , ( costs(1) + costs(end) ) / 2  , ...
+	   strcat( " snapshot:" , num2str( tm ) ) , ...
 	   "color" , 'm' , "FontSize" , 14 );
       drawnow();
     end

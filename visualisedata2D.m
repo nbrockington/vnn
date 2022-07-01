@@ -1,9 +1,13 @@
-function visualisedata2D( X , y )
+function visualisedata2D( X , y , dsize = 1 )
 % VISUALISEDATA2D Plot the special case of 2D data onto a 2D scatter
 % plot. NB. The calling subroutine is explected to set up the figure.
 %
+%  visualisedata2D( X , y )
+%  
 % - scatter points are coloured according to their class label 
 % - matrix X contains the data, vector y contains the labels
+% - dsize controls the size of the scatter dots (default 3 for a large
+% figure) 
 % - currently up to maximum 4 data labels
 %  
 % Written by Nela Brockington, 19th April 2022, London, U.K.
@@ -35,7 +39,7 @@ function visualisedata2D( X , y )
     
     % Plot the data from that class onto a 2D scatter plot
     scatter( X( find( y==c ) , 1 ) , X( find( y==c ) , 2 ) ,
-	     1 , colours{c} , 'filled' );
+	     dsize , colours{c} , 'filled' );
 
     % In lieu of legend(?!!), add text to indicate class label colour
     text( 7 , 10-2*c , strcat( "class:" , num2str( c ) ) , "color" ,
