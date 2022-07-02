@@ -29,8 +29,7 @@ Run with command `>> vnn` on MATLAB/Octave command prompt to:
 * set random weights to the neural network edges and view the initial network state and categorisation of dataset space
 * train the neural network on the dataset
 * view neural network performance during training
-* visualise final network state and categorisation of dataset space
-* based on learned weights
+* visualise final network state and categorisation of dataset space based on learned weights
 
 
 Run with command `>> debug_showNetwork` to play around with setting up
