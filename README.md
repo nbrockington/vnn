@@ -30,6 +30,7 @@ Run with command `>> vnn` on MATLAB/Octave command prompt to:
 * train the neural network on the dataset
 * view neural network performance during training
 * visualise final network state and categorisation of dataset space based on learned weights
+* view network performance on training data and test data after learning
 
 
 Run with command `>> debug_showNetwork` to play around with setting up
