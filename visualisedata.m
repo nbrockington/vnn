@@ -35,15 +35,12 @@ function visualisedata( X , y )
     % Plot the data from that class onto a 3D scatter plot
     scatter3( X( find( y==c ) , 1 ) , X( find( y==c ) , 2 ) ,
 	     X( find( y==c ) , 3 ) , [] , colours{c} , 'filled' );
+
     hold on;
     % In lieu of legend(?!!), add text to indicate class label colour
     text( 5 + (c-1)*2 , 10-2*c , strcat( "class:" , num2str( c ) ) , "color" ,
 	 darker{c} , "FontSize" , 16 );
 
   end
-
- % Set background colour to be white:
-  % f = gcf() ;
-  % set( f , 'color' , 'w' );
   
 end  

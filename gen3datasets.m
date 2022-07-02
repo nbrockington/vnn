@@ -1,16 +1,21 @@
 function [ X , y , Xcv , ycv , Xtest , ytest ] = gen3datasets( shapefun ,
-			      ndim , nexamples ,  nclasses , noise =  0.25 )
+	      ndim , nexamples ,  nclasses , noise = 0.25 , vis = 0 )
 % GEN3DATASETS Generate training, cross-validation and test datasets for
 % a neural network. 
 %
+% [ X , y , Xcv , ycv , Xtest , ytest ] = gen3datasets( shapefun ,
+% 	      ndim , nexamples ,  nclasses , noise =  0.25 )
+%  
 % Calls the function GENDATASET to generate the data and then splits the
 % data into the three datasets required, and then randomly permutes the
 % data. 
 %  
 % Visualises the training, cross-validation, and test datasets
 % separately. 
+%
+% - Argument "vis" controls whether dataset is visualised (1) or not
+% (0). 
 % 
-
 % NB. nexamples argument controls the number of examples of each class
 % in the training set. The sizes of the cross-validation and test
 % datasets will depend on the total size of the training dataset
@@ -22,7 +27,7 @@ function [ X , y , Xcv , ycv , Xtest , ytest ] = gen3datasets( shapefun ,
   % Calculate number of examples in each class for cross-validation and
   % testing datasets
   nexcv = ceil( nexamples / 3 );
-  nextest = nexcv
+  nextest = nexcv;
   
   % Calculate number of examples of each class in total for 3 datasets:
   ndata = nexamples + nexcv + nextest ;
@@ -40,8 +45,8 @@ function [ X , y , Xcv , ycv , Xtest , ytest ] = gen3datasets( shapefun ,
   Xtest = zeros( mtest , ndim );
   ytest = zeros( mtest , 1 );
 
-  size(X)
-  size(y)
+  % size(X);
+  % size(y);
 
   % Generate all the data
   [ Xfull , yfull ] = gendataset( shapefun , ndim , ndata , nclasses );
@@ -84,7 +89,7 @@ function [ X , y , Xcv , ycv , Xtest , ytest ] = gen3datasets( shapefun ,
   ytest = ytest( randrows , : );
 
   
-  
+  if ( vis == 1 )
   % Visuliase each subset with verbose output
   % -- 2D data plotted on 2D scatter plot
   % -- For n-D data, n >= 3, first 3 dimensions are plotted onto a 3D
@@ -111,7 +116,8 @@ function [ X , y , Xcv , ycv , Xtest , ytest ] = gen3datasets( shapefun ,
   else
     visualisedata( Xtest( : , 1:3 ) , ytest );
   end
-  title( "Test Dataset" , "FontSize" , 18 );  
+  title( "Test Dataset" , "FontSize" , 18 );
+  end
 
 end
 

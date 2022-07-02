@@ -2,7 +2,9 @@ function [ X , y ] = gendataset( shapefun , ndim , ndata , nclasses ,
 				noise = 0.25 )
 % GENDATASET Generate a dataset X and labels y for NN training,
 %  validation, or testing.
-%  
+% 
+% [ X , y ] = gendataset( shapefun , ndim , ndata , nclasses ,
+%                         noise = 0.25 ) 
 % -- size of output X is (ndata * nclasses x ndim)
 % -- size of output y is (ndata * nclasses x 1)
 % 
