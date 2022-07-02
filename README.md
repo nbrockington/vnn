@@ -36,6 +36,7 @@ Run with command `>> vnn` on MATLAB/Octave command prompt to:
 Run with command `>> debug_showNetwork` to play around with setting up
 a neural network with random weights
 
+![Show Structure](220702_random_network.png)
 
 # Functionality to add
 
@@ -82,8 +83,8 @@ DONE(220612)-- Add neural network % performance to subplot titles for
 
 # Known issues
 
--- Tested only on OS X (MacBook Pro) and Windows 10 (Surface
-   Pro). Lines are too thick when rendered on some systems.
+-- Tested only on OS X 11.6 (MacBook Pro). Lines are too thick when
+   rendered on some other systms.
 
 -- On older OS X systems, such as Mojave 10.14.6 and earlier, when
    using Octave with GNUPLOT qt, 3D scatter plot background is black
