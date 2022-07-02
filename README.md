@@ -37,22 +37,6 @@ Run with command `>> debug_showNetwork` to play around with setting up
 a neural network with random weights
 
 
-
-
-
--- vnn: Script to upload a cluster or spherical dataset and view it;
-   set random weights to the neural network and visualise the intial
-   network state; train the neural network on the data; view neural
-   network performance on training and test datasets and visualise
-   final categorisation of dataset space.
-
--- Currently, only 2D data can be visualised (although nD data can be
-   learned for any n>1).
-
--- Currently, only a neural network with 3 layers can be specified and
-   visualised.
-
-
 # Functionality to add
 
 -- Make neural network structure (no. of hidden layers, number of
