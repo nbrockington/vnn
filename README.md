@@ -4,8 +4,7 @@
 
 ![Show Structure](220702_unitfeatures_spheres.png)
 
-Visualise the learning of a toy neural neural network on
-multidimensional data.
+Visualise the learning of a neural neural network.
 
 Neural network/backpropagation/optimisation code comes from Andrew
 Ng's Coursera ML course
@@ -14,6 +13,7 @@ https://www.coursera.org/learn/machine-learning
 * Generation and visualisation of cluster and sphere datasets
 * Visualisation of cost function during learning
 * Visualisation of neural network structure and unit filters before and after learning
+
 ... are my own work.
 
 Inspiration taken from TensorFlow Neural Network Playground
