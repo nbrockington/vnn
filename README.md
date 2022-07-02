@@ -7,19 +7,13 @@
 Visualise the learning of a toy neural neural network on
 multidimensional data.
 
-Run with command `>> vnn` on MATLAB/Octave command prompt.
-
-Run with command `>> debug_showNetwork` to play around with just
-setting up a neural network with random weights.
-
 Neural network/backpropagation/optimisation code comes from Andrew
 Ng's Coursera ML course
 https://www.coursera.org/learn/machine-learning
 
 * Generation and visualisation of cluster and sphere datasets
 * Visualisation of cost function during learning
-* Visualisation of neural network structure and unit filters before
-* and after learning
+* Visualisation of neural network structure and unit filters before and after learning
 ... are my own work.
 
 Inspiration taken from TensorFlow Neural Network Playground
@@ -27,6 +21,24 @@ https://playground.tensorflow.org/
 
 
 # Current functionality
+
+Run with command `>> vnn` on MATLAB/Octave command prompt to:
+
+* upload or generate a cluster or spherical dataset and view it
+* select number of hidden units in the neural network
+* set random weights to the neural network edges and view the initial network state and categorisation of dataset space
+* train the neural network on the dataset
+* view neural network performance during training
+* visualise final network state and categorisation of dataset space
+* based on learned weights
+
+
+Run with command `>> debug_showNetwork` to play around with setting up
+a neural network with random weights
+
+
+
+
 
 -- vnn: Script to upload a cluster or spherical dataset and view it;
    set random weights to the neural network and visualise the intial
