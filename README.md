@@ -10,6 +10,8 @@ Based on the neural network/backpropagation/optimisation code from the
 previous Octave/MATLAB iteration of Andrew Ng's Coursera ML course
 https://www.coursera.org/learn/machine-learning
 
+The...
+
 * Generation and visualisation of cluster and sphere datasets
 * Visualisation of cost function during learning
 * Visualisation of neural network structure, unit filters, and categorisation of dataset space before and after learning
