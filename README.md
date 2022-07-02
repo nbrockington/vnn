@@ -2,7 +2,7 @@
 
 ![Neural Network Visualisations](220515_vnn1_visuals.png)
 
-![Show Structure](220612_showNetworkfig.png)
+![Show Structure](220702_unitfeatures_spheres.png)
 
 Visualise the learning of a toy neural neural network on
 multidimensional data.
@@ -47,8 +47,8 @@ https://playground.tensorflow.org/
 -- Generalise backpropagation algorithm to work for neural networks
    with any number of layers
 
--- Visualise feature filters of individual units in neural network
-   structure 
+DONE(220702)-- Visualise feature filters of individual units in neural
+   network structure
 
 DONE(220701)-- Implement user input validation to ensure suitable
    parameters are used for network and training properties

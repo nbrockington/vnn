@@ -166,7 +166,7 @@ end
 %close;
 
 % (NB) Show structure of the neural network from initial weights:
-figref1 = showNetwork( Thetas );
+featuresInit = showNetwork( Thetas );
 title( "Neural network structure: initial random weights" , "FontSize" ,
       14 );
 
@@ -269,7 +269,7 @@ end
 % (NB) Show structure of the neural network with final learned weights:
 Thetas{ 1 } = Theta1;
 Thetas{ 2 } = Theta2;
-figref2 = showNetwork( Thetas , 2.5 );
+featuresFinal = showNetwork( Thetas , 2.5 );
 title( "Neural network structure: final learned weights" , "FontSize" ,
       14 );
 

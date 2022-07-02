@@ -1,4 +1,4 @@
-function figref = showNetwork( Thetas , k = 1 )
+function features = showNetwork( Thetas , k = 1 )
 %% SHOWNETWORK Given the weights of a neural network, create a
 %% figure showing the structure of the neural network. 
 %%
@@ -10,15 +10,13 @@ function figref = showNetwork( Thetas , k = 1 )
 %% - k is a constant that controls thickness range of the plotted edges,
 %% based on weights
 %%
-%%  
+%% 
 %% NB. Number of layers is currently fixed to 3.
 %%  
-%% Written by Nela Brockington, June 2022, London, U.K.
+%% Written by Nela Brockington, June-July 2022, London, U.K.
 
   % Work out key variables from Thetas cell array structure:
   n_layers = size(Thetas, 2) + 1;
-  Th1 = Thetas{ 1 };
-  Th2 = Thetas{ 2 };
 
   % Number of units in each layer, including bias unit if present:
   n_units = zeros( 1 , n_layers );
@@ -46,31 +44,24 @@ function figref = showNetwork( Thetas , k = 1 )
     xy{ l } = ones( n_units( l ) , 1 ) * l ;
 
     if l < n_layers
-      xy{ l } += 0.01; % Add x-coordinate offset to bias units
+      xy{ l }(1,1) += 0.01; % Add x-coordinate offset to bias units
     end
 
   end
   
-  x1 = xy{ 1 };% ones( n1 , 1 ) * 1 ;
-  x2 = xy{ 2 };% ones( n2 , 1 ) * 2 ;
-  x3 = xy{ 3 };% ones( n3 , 1 ) * 3 ;
-
   % Calculating y-coordinates of each unit in each layer:  
   for l = 1:n_layers
     xy{ l }( : , 2 ) = [ max_n : -spaces( l ) : starts( l ) ]' ;
   end
 
-  y1 = xy{ 1 }( : , 2 );% [ max_n : -spaces1 : start1 ]' ;
-  y2 = xy{ 2 }( : , 2 );% [ max_n : -spaces2 : start2 ]' ;
-  y3 = xy{ 3 }( : , 2 );% [ max_n : -spaces3 : start3 ]' ;
   
   %% SHOW NETWORK
   % Create figure to show neural network, and get its handle: 
   % Setting a large figure 
-  figure( 'Position' , [500 , 500 , 800 , 600 ] ) ;
+  figure( 'Position' , [100 , 500 , 500 , 400 ] ) ;
   figref = gca + 1 ;
   hold on;
-  axis( [ 0.5 , 3.5 , 0 , max_n+2 ] );
+  axis( [ 0.5 , n_layers+0.5 , 0 , max_n+2 ] );
 
   grey = [ 0.5 , 0.5 , 0.5 ];
 
@@ -121,7 +112,7 @@ function figref = showNetwork( Thetas , k = 1 )
 	else % positive weights in colour
 	  plot( [ xy{ l }( j , 1 ) , xy{ l+1 }( i , 1 ) ] , ...
                 [ xy{ l }( j , 2 ) , xy{ l+1 }( i , 2 ) ] , ...
-	       'r-' , ...
+	       'b-' , ...
 	       'LineWidth' , ...
 	       abs( Thetas{ l }( i+toggle , j ) * widthconst( l ) ) ) ;
 	end
@@ -130,57 +121,106 @@ function figref = showNetwork( Thetas , k = 1 )
   end
 
 
-%% VISUALISING UNIT FEATURE FILTERS
+%% VISUALISING INDIVIDUAL UNIT FEATURES
   % Create a list of coordinates that sample the input space:
   D = createInputSpaceSampling( 2 , -9 , 9 );   
   m = size( D )( 1 );
   
-  % Create a 1 x n_layers cell array with three cells, one for each layer.
+  % Create a 1 x n_layers cell array with one cell for each layer. 
   % Each cell contains an i*j matrix where i is the number of samples of
-  % the data space and j is the number of units in the layer. The matrix
-  % holds the activation level of the unit for that data sample.
+  % the data space and j is the number of units in the layer. Each matrix
+  % element holds the activation level for that data sample at that
+  % unit. 
 
-  features( 1 , : ) = { ones( m , n_units( 1 ) ) };
-  features( 2 , : ) = { ones( m , n_units( 2 ) ) };
-  features( 3 , : ) = { ones( m , n_units( 3 ) ) };
+  for l = 1:n_layers
+    features( l , : ) = { ones( m , n_units( l ) ) };
+  end
+    
+  %% Calculate feature filters:
 
-  % Calculate feature filters for units in input layer: 
-  features{ 1 , 1 }( : , 2 : 3 ) = D;
+  % (1) Input layer
+  % First unit is bias unit (leave as ones)
+
+  % Second unit represents the first dimension of the data along the
+  % x-axis.
+
+  features{ 1 , 1 }( : , 2 ) = D( : , 1 );
+
+  % Subsequent units represent the remaining dimensions of the data
+  % visualised against the y-axis.
+
+  for u = 3:n_units( 1 )
+    features{ 1 , 1 }( : , u ) = D( : , 2 );
+  end
+
+  % (2) Hidden layers: leave the first column for bias unit
+  for l = 2:( n_layers - 1 ) % For each hidden layer
+    features{ l }( : , 2:end ) = sigmoid( ...
+			 features{ l-1 } * Thetas{ l-1 }' );
+  end
+
+
+  % (3) Output layer
+  features{ l+1 } = sigmoid( features{ l } * Thetas{ l }' );
+
+  % Scale the featuers of every unit to lie between -1 and 1 to aid
+  % clearer visualistion with the colour map:
+  for l = 1:n_layers
+    for u = 1:n_units( l )
+      features{ l }( : , u ) /= max( features{ l }( : , u ) );
+    end				    
+  end
   
-  % Plot colour map of feature filters for second unit (X) in input
-  % layer:
-  Dtemp(:,1) = D(:,1) .* 0.025 .* ( 2.5 / (max_n + 2 ) );
-  Dtemp(:,2) = D(:,2) .* 0.025 ;
+  %% Plot colour map of feature filters:
 
-  Dtemp(:,1) += x1( 2 );
-  Dtemp(:,2) += y1( 2 );
+  % Scale colour map coordinates down to size
+  Dtemp(:,1) = D(:,1) .* 0.03 .* ( 2.5 / (max_n + 2 ) );
+  Dtemp(:,2) = D(:,2) .* 0.03;
 
-  scatter( Dtemp(:,1) , Dtemp(:,2) , [4.0] , D(:,1) , "filled" );
-  colormap( hot );
+  for l = 1:n_layers % for each layer
+    for u = 1:n_units( l ) % for each unit
 
-  minx = min( Dtemp(:,1) );
-  maxx = max( Dtemp(:,1) );
-  miny = min( Dtemp(:,2) );
-  maxy = max( Dtemp(:,2) );
+      % Translate coordinates to be centred on x,y-coords of the unit:
+      Dunit(:,1) = Dtemp(:,1) + xy{ l }( u,1 );
+      Dunit(:,2) = Dtemp(:,2) + xy{ l }( u,2 );
 
-  plot( [ minx , minx ] , [ miny , maxy ] , 'k-' );
-  plot( [ minx , maxx ] , [ miny , miny ] , 'k-' );
-  plot( [ minx , maxx ] , [ maxy , maxy ] , 'k-' );
-  plot( [ maxx , maxx ] , [ miny , maxy ] , 'k-' );
-  
-  
-  % Plot the bias units in black: 
-%  plot( x1( 1 ) , y1( 1 ) , 'ks' , 'MarkerFaceColor' , 'k' , ...
-%       'MarkerSize' , 12 );
-  plot( x2( 1 ) , y2( 1 ) , 'ks' , 'MarkerFaceColor' , 'k' , ...
-       'MarkerSize' , 12 );
-       
-  % Plot the rest of the units in blue:
-%  plot( x1( 2 : end ) , y1( 2 : end ) , 'bs' , ...
-%       'MarkerFaceColor' , 'b' , 'MarkerSize' , 12 );
-  plot( x2( 2 : end ) , y2( 2 : end ) , 'bs' , ...
-       'MarkerFaceColor' , 'b' , 'MarkerSize' , 12 );
-  plot( x3 , y3 , 'bs' , 'MarkerFaceColor' , 'b' , 'MarkerSize' , 12 );
+      % Plot the unit feature map as specified colour map:
+      scatter( Dunit(:,1) , Dunit(:,2) , [5.0] , ...
+	      features{ l }(:,u), "filled" );
+      colormap( winter );
 
+      % Plot the border around the unit
+      minx = min( Dunit(:,1) );
+      maxx = max( Dunit(:,1) );
+      miny = min( Dunit(:,2) );
+      maxy = max( Dunit(:,2) );
+
+      plot( [ minx , minx ] , [ miny , maxy ] , 'k-' );
+      plot( [ minx , maxx ] , [ miny , miny ] , 'k-' );
+      plot( [ minx , maxx ] , [ maxy , maxy ] , 'k-' );
+      plot( [ maxx , maxx ] , [ miny , maxy ] , 'k-' );
+    end
+  end
+    
+  % Plot key for data class colours:
+
+  % Create a 'dark' colour table for up to four data classes: 
+  darker = { [ 0.2 0.25 0.65 ] , % blue-ish                                  
+              [ 0.6 0.2 0.35 ] ,  % bordeaux-ish                             
+              [ 0.25 0.6 0.2 ] , % green-ish                                 
+              [ 0.65 0.6 0.35 ] };   % orange-ish
+  for u = 1:n_units( end )
+
+    if u < 5 % Colours provided for up to four classes
+
+      text( xy{ end }( u , 1 ) + 0.25, xy{ end }( u , 2 ), ...
+	   strcat( "class:" , num2str( u ) ) , ...
+	   "color" , darker{ u } , "FontSize" , 16 );
+    else
+      text( xy{ end }( u , 1 ) + 0.25, xy{ end }( u , 2 ), ...
+	   strcat( "class:" , num2str( u ) ) , ...
+	   "color" , "black" , "FontSize" , 16 );
+    end
+  end  
   % Turn axes off:
   axis off;
