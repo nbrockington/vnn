@@ -16,9 +16,11 @@ Neural network/backpropagation/optimisation code comes from Andrew
 Ng's Coursera ML course
 https://www.coursera.org/learn/machine-learning
 
-Generation and visualisation of cluster and sphere datasets from
-distributions, and visualisation of cost function and neural network
-structure and filters during and after learning, are my own work.
+* Generation and visualisation of cluster and sphere datasets
+* Visualisation of cost function during learning
+* Visualisation of neural network structure and unit filters before
+* and after learning
+... are my own work.
 
 Inspiration taken from TensorFlow Neural Network Playground
 https://playground.tensorflow.org/
