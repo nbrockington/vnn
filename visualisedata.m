@@ -42,9 +42,5 @@ function visualisedata( X , y )
 	 darker{c} , "FontSize" , 16 );
 
   end
-
- % Set background colour to be white:
- %  f = gcf() ;
- %  set( f , 'color' , 'w' );
   
 end  
