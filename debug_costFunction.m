@@ -6,7 +6,7 @@
 load( '2Dspheredata1.mat' );
 
 % Vectorise variables
-n_units = [ 2 , 6 , 4 ];
+n_units = [ 2 , 6 , 8 , 4 ];
 n_layers = size( n_units , 2 );
 
 % Load initial theta matrices:
@@ -17,9 +17,6 @@ for d = 1:( n_layers-1)
 end
 %initial_Theta1 = randInitializeWeights( ndim , nhiddenunits );
 %initial_Theta2 = randInitializeWeights( nhiddenunits , nclasses );
-
-%Thetas{ 1 } = initial_Theta1;
-%Thetas{ 2 } = initial_Theta2;
 
 % (NB) Show structure of the neural network from initial weights:            
 featuresInit = showNetwork( Thetas );

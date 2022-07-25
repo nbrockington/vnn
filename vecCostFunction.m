@@ -62,7 +62,7 @@ end
 hTheta = a{ n_layers }( : , 2:end );
 
 % Recode y-labels as vectors:
-yVec = zeros( m , n_units(3) ) ;
+yVec = zeros( m , n_units(end) ) ;
 
 for q = 1:m
   yVec( q , y( q ) ) = 1 ;
