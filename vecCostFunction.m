@@ -1,11 +1,9 @@
-function [J grad] = nnCostFunction(nn_params, ...
-                                   input_layer_size, ...
-                                   hidden_layer_size, ...
-                                   num_labels, ...
+function [J grad] = vecCostFunction(nn_params, ...
+                                   n_units, ...
                                    X, y, lambda)
-%NNCOSTFUNCTION Implements the neural network cost function for a two layer
+%VECCOSTFUNCTION Implements the neural network cost function for a two layer
 %neural network which performs classification
-%   [J grad] = NNCOSTFUNCTON(nn_params, hidden_layer_size, num_labels, ...
+%   [J grad] = VECCOSTFUNCTON( nn_params, n_units, ...
 %   X, y, lambda) computes the cost and gradient of the neural network. The
 %   parameters for the neural network are "unrolled" into the vector
 %   nn_params and need to be converted back into the weight matrices. 
@@ -13,15 +11,43 @@ function [J grad] = nnCostFunction(nn_params, ...
 %   The returned parameter grad should be a "unrolled" vector of the
 %   partial derivatives of the neural network.
 %
+%
+% Edited by Nela Brockington, July 2022, London U.K.
+% - original code from Ng ML Coursera course: "nnCostFunction.m"
+% - edited to generalise backpropagation algorithm to work for multiple
+%   hidden layers, not just one. 
+
 
   
-% Reshape nn_params back into the parameters Theta1 and Theta2, the weight matrices
-% for our 2 layer neural network
-Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
-                 hidden_layer_size, (input_layer_size + 1));
+% Reshape nn_params back into the parameters Theta1 and Theta2,
+% the weight matrices for our 2 layer neural network
 
-Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
-                 num_labels, (hidden_layer_size + 1));
+n_layers = size( n_units , 2 );
+
+% Set up cell array of empty matrices to hold Theta weights:
+Thetas{ 1 , n_layers - 1 } = [];
+idx_start = 0;
+
+for d = 1:( n_layers - 1 )
+
+  idx_end = idx_start + n_units( d + 1 ) * ( n_units( d ) + 1 );
+
+  Thetas{ d } = reshape( nn_params( idx_start + 1 : idx_end ), ...
+            		n_units( d + 1 ), ...
+			n_units( d ) + 1 );
+
+  idx_start = idx_end;
+
+end		
+
+Theta1 = Thetas{ 1 };
+Theta2 = Thetas{ 2 };
+
+%Theta1 = reshape(nn_params( 1 : n_units(2) * (n_units(1) + 1)), ...
+%                 n_units(2), (n_units(1) + 1));
+
+%Theta2 = reshape(nn_params((1 + (n_units(2) * (n_units(1) + 1))) : end), ...
+%                 n_units(3), (n_units(2) + 1));
 
 % Setup some useful variables
 m = size(X, 1);
@@ -58,7 +84,7 @@ hTheta = a3 ;
 
 
 % Recode y-labels as vectors:
-yVec = zeros( m , num_labels ) ;
+yVec = zeros( m , n_units(3) ) ;
 
 for q = 1:m
 
@@ -79,21 +105,21 @@ J = J + ( lambda / ( 2 * m ) ) * ...
 
 %
 % Part 2: Implement the backpropagation algorithm to compute the gradients
-%         Theta1_grad and Theta2_grad. You should return the partial derivatives of
-%         the cost function with respect to Theta1 and Theta2 in Theta1_grad and
+%   Theta1_grad and Theta2_grad. You should return the partial derivatives of
+%   the cost function with respect to Theta1 and Theta2 in Theta1_grad and
 %         Theta2_grad, respectively. After implementing Part 2, you can check
 %         that your implementation is correct by running checkNNGradients
 %
 %         Note: The vector y passed into the function is a vector of labels
-%               containing values from 1..K. You need to map this vector into a 
-%               binary vector of 1's and 0's to be used with the neural network
+%         containing values from 1..K. You need to map this vector into a 
+%         binary vector of 1's and 0's to be used with the neural network
 %               cost function.
 %
 %         Hint: We recommend implementing backpropagation using a for-loop
-%               over the training examples if you are implementing it for the 
+%         over the training examples if you are implementing it for the 
 %               first time.
 
-% My code:
+% (NEB) My code:
 
 % Set capital-delta matrices to zeros: 
 capDelta1 = zeros( size( Theta1 ) ) ;
@@ -129,20 +155,20 @@ Theta1_grad = capDelta1 / m ;
 
 % Add regularisation to theta gradients (but not bias terms):
 Theta2_grad = Theta2_grad + (lambda / m ) * ...
-              [ zeros( num_labels, 1 ) Theta2( : , 2: end)] ;
+              [ zeros( n_units(3), 1 ) Theta2( : , 2: end)] ;
 
 
 Theta1_grad = Theta1_grad + (lambda / m ) * ...
-              [ zeros( hidden_layer_size , 1 ) Theta1( : , 2:end)] ;
+              [ zeros( n_units(2) , 1 ) Theta1( : , 2:end)] ;
 
 
 %
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
-%               backpropagation. That is, you can compute the gradients for
-%               the regularization separately and then add them to Theta1_grad
-%               and Theta2_grad from Part 2.
+%         backpropagation. That is, you can compute the gradients for
+%         the regularization separately and then add them to Theta1_grad
+%         and Theta2_grad from Part 2.
 %
 
 
