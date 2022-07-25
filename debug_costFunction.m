@@ -6,7 +6,7 @@
 load( '2Dspheredata1.mat' );
 
 % Vectorise variables
-n_units = [ 2 , 6 , 8 , 4 ];
+n_units = [ 2 , 3 , 5 , 8 , 4 ];
 n_layers = size( n_units , 2 );
 
 % Load initial theta matrices:
