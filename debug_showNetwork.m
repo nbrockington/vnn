@@ -8,7 +8,7 @@ ndim = input( "Enter n dimensions of data: " );
 
 n_hidden_layers = input( "Enter the number of hidden layers: " );
 while n_hidden_layers < 1 || n_hidden_layers > 5
-  fprintf( "Number of hidden layers should be between 1 and 5 inclusive.\n" );
+  fprintf( "No. of hidden layers should be between 1 and 5 inclusive.\n" );
   n_hidden_layers = input( "Enter the number of hidden layers: " );
 end
 
