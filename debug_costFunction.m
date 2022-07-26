@@ -2,8 +2,9 @@
 % generalises the neural network cost function and finds the gradients
 % of the neural network for a multi-layer network.
 
-% Load 2D spherical dataset:
-load( '2Dspheredata1.mat' );
+% Load dataset:
+%load( '2Dspheredata1.mat' );
+load( '2Dclusterdata1.mat' );
 
 % Vectorise variables
 n_units = [ 2 , 3 , 5 , 6 , 4 ];
@@ -59,16 +60,9 @@ for d = 1:( n_layers - 1 )
   idx_start = idx_end;
 end
 
-% Obtain Theta1 and Theta2 back from nn_params                               
-%Theta1 = reshape( nn_params( 1 : nhiddenunits * ( ndim + 1 ) ) , ...
-%                 nhiddenunits , ( ndim + 1 ) );
 
-%Theta2 = reshape( nn_params( ( 1 + ...
-%         	      ( nhiddenunits * ( ndim + 1 ) ) ) : end ), ...
-%                  nclasses , ( nhiddenunits + 1 ) );
-
-
-% Last output lines of training procedure should be: 
+% Last output lines of training procedure with saved intial weights and
+% single hidden layer of 6 units should be:
 
 %Iteration     4 | Cost: 2.238821e+00
 %Saving weights at snapshot 1.
