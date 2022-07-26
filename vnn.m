@@ -176,7 +176,7 @@ end
 if (ndim == 2)
   figure( 1 , 'Position' , [ 5 , 450 , 560 , 394 ]);
   subplot( 2 , 2 , 2 ); hold on;
-  D = visualiseNNoutput( Thetas );
+  p_init = visualiseNNoutput( Thetas );
   title( "Neural network: initial random weights" ,
 	"FontSize" , 14 );
 end
@@ -283,25 +283,17 @@ if (ndim == 2)
       QThetas{ d } = reshape( q_params( idx_start + 1 : idx_end ), ...
 			     n_units( d + 1 ), ...
 			     n_units( d ) + 1 );
-    
-%    QTheta1 = reshape( q_params( 1 : nhiddenunits * ( ndim + 1 ) ) , ...
-%                 nhiddenunits , ( ndim + 1 ) );
-
-%    QTheta2 = reshape( q_params( ( 1 + ( nhiddenunits * ( ndim + 1 ) ) ) : end ) , ...
-%                 nclasses , ( nhiddenunits + 1 ) );
-
-
     end
-    % Plot the categorisation of input space by those weights:
+    % Plot the categorisation of input space by snapshot weights:
     subplot( 2 , 2 , i ); hold on;
-    D = visualiseNNoutput( QThetas );
+    p_snap = visualiseNNoutput( QThetas );
     title( ["Weights at snapshot ", num2str( i ) ] ,
 	  "FontSize" , 14 );
   end
     
   % Plot result of final learned weights:
   subplot( 2 , 2 , 4 ); hold on;
-    D = visualiseNNoutput( Thetas );
+    p_final = visualiseNNoutput( Thetas );
     title( "Final learned weights" , "FontSize" , 14 );
 end
 

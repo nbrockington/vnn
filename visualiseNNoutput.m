@@ -1,4 +1,4 @@
-function D = visualiseNNoutput( Thetas , res = 0.2 )
+function p = visualiseNNoutput( Thetas , res = 0.2 )
 % VISUALISENNOUTPUT Given the weights of the neural network, plot the
 % predicted labels of data points covering 2D input space.
 %
