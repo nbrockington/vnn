@@ -4,7 +4,7 @@ Visualise the learning of a neural neural network.
 
 ![Neural Network Visualisations](220515_vnn1_visuals.png)
 
-![Show Structure](220702_unitfeatures_spheres.png)
+![Show Structure](220726_multilayer_backprop.png)
 
 Based on the neural network/backpropagation/optimisation code from the
 previous Octave/MATLAB iteration of Andrew Ng's Coursera ML course
