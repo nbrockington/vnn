@@ -15,7 +15,8 @@ The...
 * generalisation of costFunction and backpropagation algorithms to work with arbitrary number of hidden layers,
 * generation and visualisation of cluster and sphere datasets,
 * visualisation of cost function during learning, and
-* visualisation of neural network structure, unit filters, and categorisation of dataset space before and after learning
+* visualisation of neural network structure, unit filters, and overall
+* categorisation of dataset space before and after learning
 
 ... are all my own work.
 
