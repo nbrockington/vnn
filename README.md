@@ -12,6 +12,7 @@ https://www.coursera.org/learn/machine-learning
 
 The...
 
+* Generalisation of costFunction and backpropagation algorithms to work with arbitrary number of hidden layers
 * Generation and visualisation of cluster and sphere datasets
 * Visualisation of cost function during learning
 * Visualisation of neural network structure, unit filters, and categorisation of dataset space before and after learning
@@ -42,9 +43,9 @@ a neural network with random weights:
 
 ![Show Structure](220702_random_network.png)
 
-# Functionality to add
+# Functionality ideas
 
--- Generalise backpropagation algorithm to work for neural networks
+DONE(220725)-- Generalise backpropagation algorithm to work for neural networks
    with any number of layers
 
 DONE(220702)-- Visualise feature filters of individual units in neural
@@ -69,13 +70,13 @@ DONE(220612)-- Visualise final neural network structure and weights
 DONE(220612)-- Implement user choice of number of units in the hidden
    layer, with immediate visualistion of randomly initialised weights.
 
+DONE(220612)-- Add neural network % performance to subplot titles for
+   final Training Set and Test Set visualisations (to vnn1.m)
+
 -- Add visualisation of cost function on Test Set data during training
    (to fmincgv.m)
 
 -- Make figure sizes relative to screen size rather than fixed.
-
-DONE(220612)-- Add neural network % performance to subplot titles for
-   final Training Set and Test Set visualisations (to vnn1.m)
 
 -- Visualisation of neural network filters and structure for nD data,
    n >= 3. Possible 3D scatter plots?
@@ -89,13 +90,12 @@ DONE(220612)-- Add neural network % performance to subplot titles for
 # Known issues
 
 -- Tested only on OS X 11.6 (MacBook Pro). On some other systems,
-   lines are rendered too thickly.
+   figure lines are rendered too thickly.
    
 
 -- On older OS X systems, such as Mojave 10.14.6 and earlier, when
-   using Octave with GNUPLOT qt, 3D scatter plot background is black
-   by default and must be changed to white manually by user at the
-   start of the backpropagation learning process to improve
-   visualisation.
+   using Octave with GNUPLOT qt, figure backgrounds are black by
+   default and must be changed to white manually by user at the start
+   of the backpropagation learning process to improve visualisation.
 
 
