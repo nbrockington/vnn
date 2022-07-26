@@ -12,12 +12,12 @@ https://www.coursera.org/learn/machine-learning
 
 The...
 
-* Generalisation of costFunction and backpropagation algorithms to work with arbitrary number of hidden layers
-* Generation and visualisation of cluster and sphere datasets
-* Visualisation of cost function during learning
-* Visualisation of neural network structure, unit filters, and categorisation of dataset space before and after learning
+* generalisation of costFunction and backpropagation algorithms to work with arbitrary number of hidden layers,
+* generation and visualisation of cluster and sphere datasets,
+* visualisation of cost function during learning, and
+* visualisation of neural network structure, unit filters, and categorisation of dataset space before and after learning
 
-... are my own work.
+... are all my own work.
 
 Inspiration taken from TensorFlow Neural Network Playground
 https://playground.tensorflow.org/
