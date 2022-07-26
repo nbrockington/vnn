@@ -29,7 +29,7 @@ https://playground.tensorflow.org/
 Run with command `>> vnn` on MATLAB/Octave command prompt to:
 
 * upload or generate a cluster or spherical dataset and view it
-* select number of hidden units in the neural network
+* select number of hidden layers and units in the neural network
 * set random weights to the neural network edges and view the initial network state and categorisation of dataset space
 * train the neural network on the dataset
 * view neural network performance during training
