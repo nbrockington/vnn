@@ -7,7 +7,7 @@ Visualise the learning of a neural neural network.
 ![Show Structure](220726_multilayer_backprop.png)
 
 Based on the neural network/backpropagation/optimisation code from the
-previous Octave/MATLAB iteration of Andrew Ng's Coursera ML course
+2021 Octave/MATLAB iteration of Andrew Ng's Coursera ML course
 https://www.coursera.org/learn/machine-learning
 
 The...
