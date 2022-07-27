@@ -44,7 +44,7 @@ a neural network with random weights:
 
 ![Show Structure](220702_random_network.png)
 
-# Functionality ideas
+# Future functionality ideas
 
 DONE(220725)-- Generalise backpropagation algorithm to work for neural networks
    with any number of layers
