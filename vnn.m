@@ -273,19 +273,22 @@ if (ndim == 2)
 
   % For each snapshot:
   for i = 1:3
-    
-    q_params = qweights{ 1 , i };
+    clear QThetas;
+    q_params = qweights{ i };
 
     % Reshape the parameters into weight matrices:
     idx_start = 0;
+
     for d = 1:( n_layers - 1 )
       idx_end = idx_start + n_units( d + 1 ) * ( n_units( d ) + 1 );
       QThetas{ d } = reshape( q_params( idx_start + 1 : idx_end ), ...
 			     n_units( d + 1 ), ...
 			     n_units( d ) + 1 );
+      idx_start = idx_end;
     end
     % Plot the categorisation of input space by snapshot weights:
-    subplot( 2 , 2 , i ); hold on;
+    subplot( 2 , 2 , i );
+    hold on;
     p_snap = visualiseNNoutput( QThetas );
     title( ["Weights at snapshot ", num2str( i ) ] ,
 	  "FontSize" , 14 );

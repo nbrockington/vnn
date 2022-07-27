@@ -36,7 +36,7 @@ Run with command `>> vnn` on MATLAB/Octave command prompt to:
 * visualise final network state and categorisation of dataset space based on learned weights
 * view network performance on training data and test data after learning
 
-![Learn Cluster Data](220726_cluster_4layers.png)
+![Learn Cluster Data](220727_cluster_4layers.png)
 
 
 Run with command `>> debug_showNetwork` to play around with setting up
