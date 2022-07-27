@@ -1,13 +1,14 @@
 # VNN (Octave/MATLAB)
 
-Visualise the learning of a neural neural network.
+Visualise the learning of a neural network.
 
 ![Neural Network Visualisations](220515_vnn1_visuals.png)
 
 ![Show Structure](220726_multilayer_backprop.png)
 
-Based on the neural network/backpropagation/optimisation code from the
-2021 Octave/MATLAB iteration of Andrew Ng's Coursera ML course
+Based on the backpropagation and optimisation code for a feedfoward
+network (multilayer perceptron) from the 2021 Octave/MATLAB iteration
+of Andrew Ng's Coursera ML course
 https://www.coursera.org/learn/machine-learning
 
 The...
