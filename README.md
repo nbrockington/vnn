@@ -8,8 +8,8 @@ Visualise the learning of a neural network.
 
 Based on the backpropagation and optimisation code for a feedfoward
 network (multilayer perceptron, batch gradient descent) from the 2021
-Octave/MATLAB iteration of Andrew Ng's Coursera ML course
-https://www.coursera.org/learn/machine-learning
+Octave/MATLAB iteration of Andrew Ng's Coursera ML course https://www.coursera.org/learn/machine-learning-course/home/info
+
 
 The...
 
